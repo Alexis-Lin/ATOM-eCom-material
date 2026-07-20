@@ -1,0 +1,216 @@
+<style>
+  :root {
+    --page: #F0F2EC;
+    --card: #FFFFFF;
+    --ink: #191D13;
+    --ink-soft: #404633;
+    --muted: #878D79;
+    --faint: #B4B9A8;
+    --line: #EEF0E7;
+    --line-mid: #E4E7DA;
+    --dash: #CBD0BF;
+    --black: #17190F;
+    /* Basic = gray */
+    --t1: #F5F6F3;  --ink1: #6E7464;  --card1: #C9CEBE;
+    /* Plus = green */
+    --t2: #F1F8DD;  --ink2: #5E8A00;  --card2: #AEE63F;
+    /* Pro = black-gold */
+    --t3: #FBF3D4;  --ink3: #9A7500;  --ink3d: #45390F;  --card3: #F3C63C;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI",
+      "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.4;
+  }
+  .page { max-width: 920px; margin: 0 auto; padding: clamp(20px,4vw,40px) 16px 64px; }
+  .page-note { text-align: center; color: var(--muted); font-size: 13px; margin: 0 auto 28px; max-width: 34em; line-height: 1.6; }
+  .page-note b { color: var(--ink-soft); }
+
+  .pair { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; align-items: flex-start; }
+  .chart-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .chart-cap { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+  .chart { width: 400px; max-width: calc(100vw - 32px); background: var(--card); overflow: hidden; }
+  .chart-head { padding: 20px 20px 12px; text-align: center; }
+  .chart-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -.02em; margin: 0; color: var(--ink); }
+  .chart-head p { font-size: 13px; margin: 5px 0 0; color: var(--muted); font-weight: 500; letter-spacing: .02em; }
+  .chart-head p b { color: var(--ink2); font-weight: 700; }
+
+  .matrix { display: grid; grid-template-columns: minmax(122px, 1.62fr) repeat(3, 1fr); column-gap: 5px; }
+
+  .cell {
+    padding: 7px 4px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: 13.5px; min-width: 0;
+  }
+  .cell.label { flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding-left: 16px; padding-right: 4px; color: var(--ink-soft); font-weight: 600; line-height: 1.2; font-size: 13px; }
+  .cell.label small { display: block; font-size: 9.5px; font-weight: 600; color: var(--faint); letter-spacing: .01em; margin-top: 2px; line-height: 1.25; }
+
+  .c1 { background: var(--t1); }
+  .c2 { background: var(--t2); }
+  .c3 { background: var(--t3); }
+
+  /* header cells with black membership-card tag */
+  .cell.khead { flex-direction: column; justify-content: flex-end; gap: 0; padding: 10px 3px 11px; align-self: stretch; }
+  .khead .role { font-size: 9.5px; font-weight: 700; letter-spacing: .04em; margin-bottom: 6px; }
+  .khead.c1 .role { color: var(--ink1); }
+  .khead.c2 .role { color: var(--ink2); }
+  .khead.c3 .role { color: var(--ink3); }
+  .card-tag {
+    display: inline-flex; flex-direction: column; align-items: center;
+    background: var(--black); border-radius: 7px; padding: 6px 4px 5px; min-width: 74px;
+  }
+  .card-tag .ct-en { font-size: 13.5px; font-weight: 800; letter-spacing: .01em; line-height: 1.05; }
+  .card-tag .ct-cn { font-size: 9px; font-weight: 700; letter-spacing: .04em; line-height: 1.2; margin-top: 2px; opacity: .92; }
+  .c1 .card-tag .ct-en, .c1 .card-tag .ct-cn { color: var(--card1); }
+  .c2 .card-tag .ct-en, .c2 .card-tag .ct-cn { color: var(--card2); }
+  .c3 .card-tag .ct-en, .c3 .card-tag .ct-cn { color: var(--card3); }
+  .corner { justify-content: flex-start; text-align: left; padding-left: 16px; align-items: flex-end; padding-bottom: 12px; font-size: 9.5px; font-weight: 800; letter-spacing: .14em; color: var(--muted); }
+
+  .section {
+    grid-column: 1 / -1; color: var(--faint);
+    font-size: 9.5px; font-weight: 800; letter-spacing: .14em;
+    padding: 9px 16px 3px; border-top: 1px solid var(--line-mid);
+  }
+  .section.soon { color: var(--ink3); }
+
+  .ic { display: grid; place-items: center; }
+  .c1 .ic svg { stroke: var(--ink1); }
+  .c2 .ic svg { stroke: var(--ink2); }
+  .c3 .ic svg { stroke: var(--ink3d); }
+  .dash { color: var(--dash); font-weight: 600; }
+  .prev { color: var(--muted); font-weight: 600; font-size: 12.5px; }
+  .soon { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+  .c2 .soon { color: var(--ink2); }
+  .c3 .soon { color: var(--ink3); }
+  .val { font-weight: 700; font-variant-numeric: tabular-nums; font-size: 13px; line-height: 1.15; }
+  .c1 .val { color: var(--ink1); }
+  .c2 .val { color: var(--ink2); }
+  .c3 .val { color: var(--ink3); }
+
+  .chart-foot {
+    margin-top: 0; border-top: 1px solid var(--line-mid);
+    padding: 10px 16px 14px; font-size: 9.5px; color: var(--faint);
+    line-height: 1.6; letter-spacing: .02em; text-align: center;
+  }
+</style>
+
+<div class="page">
+  <p class="page-note"><b>会员权益对比图 · 矩阵版 A</b> —— 黑卡三色（Basic 灰 / Plus 绿 / Pro 金），含「即将上线」与售前答疑脚注。</p>
+  <div class="pair" id="charts"></div>
+</div>
+
+<script>
+  const CHECK = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  const P = { preview: true };
+  const S = { soon: true };
+  const X = false, Y = true;
+
+  const DATA = {
+    zh: {
+      title: '三档会员体系', sub: '匹配训练阶段 · <b>买 ATOM 即享 Plus</b>', corner: '训练能力',
+      kits: [
+        { role: '入门训练', en: 'Basic', cn: '免费版' },
+        { role: '日常训练', en: 'Plus',  cn: '进阶会员' },
+        { role: '进阶提升', en: 'Pro',   cn: '专业会员' }
+      ],
+      rows: [
+        { section: '跟练与记录' },
+        { label: '动作库与课程',   v: [Y, Y, Y] },
+        { label: '自主编排训练', v: [Y, Y, Y] },
+        { label: '趋势与手表同步', v: [Y, Y, Y] },
+        { section: 'AI 实时教练' },
+        { label: '智能训练计划',       v: [X, Y, Y] },
+        { label: '自动计数计次', v: [X, Y, Y] },
+        { label: '动作指导与纠错', v: [X, Y, Y] },
+        { label: '课后训练报告',       v: [X, Y, Y] },
+        { label: '视频存储与回放', v: [X, Y, Y] },
+        { label: 'TV 投屏训练',        v: [X, Y, Y] },
+        { section: '高级训练分析' },
+        { label: '动作质量分析',   v: [X, P, Y] },
+        { label: '力线分析',           v: [X, P, Y] },
+        { label: 'VBT 速度分析',       v: [X, P, Y] },
+        { section: '使用额度' },
+        { label: 'AI 教练对话',        v: ['10 次/月', '100 次/月', '无限'] },
+        { label: 'AI 实时时长',    v: [X, '20 小时/月', '200 小时/月'] },
+        { label: '视频云存储',     v: [X, '5GB', '200GB'] },
+        { section: '即将上线', soon: true },
+        { label: '自由动作识别', sub: '无需预设 · 全程无感', v: [X, S, S] },
+        { label: '多账号系统',   sub: '家庭 / 多人 共用',       v: [X, X, S] }
+      ],
+      foot: '✓ 含 · 预览 = 可试用 · 即将 = 开发中 · — 不含 ｜ 基础功能永久免费<br>每台 ATOM 随机附赠 Plus 进阶会员（与首次激活账号绑定）<br>Plus / Pro 为 ATOM App 会员（BodyPark），与电商平台会员无关'
+    },
+    en: {
+      title: 'Membership Tiers', sub: 'Matched to your stage · <b>Plus included with ATOM</b>', corner: 'Features',
+      kits: [
+        { role: 'Beginner', en: 'Basic', cn: 'Free' },
+        { role: 'Everyday', en: 'Plus',  cn: 'Member' },
+        { role: 'Advanced', en: 'Pro',   cn: 'Member' }
+      ],
+      rows: [
+        { section: 'Train & Track' },
+        { label: 'Library & workouts', v: [Y, Y, Y] },
+        { label: 'Custom plans & log',  v: [Y, Y, Y] },
+        { label: 'Trends & watch sync', v: [Y, Y, Y] },
+        { section: 'AI Live Coaching' },
+        { label: 'Adaptive plans',       v: [X, Y, Y] },
+        { label: 'Auto rep-counting', v: [X, Y, Y] },
+        { label: 'Form guidance & fix', v: [X, Y, Y] },
+        { label: 'Workout reports',          v: [X, Y, Y] },
+        { label: 'Recording & replay',       v: [X, Y, Y] },
+        { label: 'TV casting',               v: [X, Y, Y] },
+        { section: 'Advanced Analysis' },
+        { label: 'Form insights', v: [X, P, Y] },
+        { label: 'Bar-path analysis',     v: [X, P, Y] },
+        { label: 'VBT analysis', v: [X, P, Y] },
+        { section: 'Usage & Quota' },
+        { label: 'AI coach chats',        v: ['10/mo', '100/mo', 'Unlimited'] },
+        { label: 'Live-coaching time', v: [X, '20 hrs/mo', '200 hrs/mo'] },
+        { label: 'Cloud storage',   v: [X, '5GB', '200GB'] },
+        { section: 'Coming Soon', soon: true },
+        { label: 'Free-form tracking', sub: 'No preset · auto-log', v: [X, S, S] },
+        { label: 'Multi-account',      sub: 'Family / shared profiles',   v: [X, X, S] }
+      ],
+      foot: '✓ Included · Preview = trial · Soon = in development · — Not included ｜ Basic is free forever<br>Plus membership is included with every ATOM (bound to the activating account)<br>Plus / Pro are ATOM App memberships (by BodyPark), unrelated to any store membership'
+    }
+  };
+
+  function buildChart(d, capText, lang) {
+    const colCls = ['c1', 'c2', 'c3'];
+    const soonLabel = lang === 'en' ? 'Soon' : '即将';
+    const prevLabel = lang === 'en' ? 'Preview' : '预览';
+    let cells = `<div class="cell corner">${d.corner}</div>`;
+    d.kits.forEach((k, i) => {
+      cells += `<div class="cell khead ${colCls[i]}">
+        <span class="role">${k.role}</span>
+        <span class="card-tag"><span class="ct-en">${k.en}</span><span class="ct-cn">${k.cn}</span></span>
+      </div>`;
+    });
+    d.rows.forEach(r => {
+      if (r.section) { cells += `<div class="section${r.soon ? ' soon' : ''}">${r.section}</div>`; return; }
+      cells += `<div class="cell label">${r.label}${r.sub ? `<small>${r.sub}</small>` : ''}</div>`;
+      r.v.forEach((val, i) => {
+        let inner;
+        if (val === true) inner = `<span class="ic">${CHECK}</span>`;
+        else if (val === false) inner = `<span class="dash">—</span>`;
+        else if (val && val.preview) inner = `<span class="prev">${prevLabel}</span>`;
+        else if (val && val.soon) inner = `<span class="soon">${soonLabel}</span>`;
+        else inner = `<span class="val">${val}</span>`;
+        cells += `<div class="cell ${colCls[i]}">${inner}</div>`;
+      });
+    });
+    return `<div class="chart-wrap">
+      <span class="chart-cap">${capText}</span>
+      <div class="chart ${lang}">
+        <div class="chart-head"><h2>${d.title}</h2><p>${d.sub}</p></div>
+        <div class="matrix">${cells}</div>
+        <div class="chart-foot">${d.foot}</div>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('charts').innerHTML =
+    buildChart(DATA.zh, '国内版 · 中文', 'zh') + buildChart(DATA.en, 'Global · English', 'en');
+</script>

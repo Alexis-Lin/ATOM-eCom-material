@@ -1,0 +1,183 @@
+<style>
+  :root {
+    --page: #F0F2EC;
+    --card: #FFFFFF;
+    --ink: #191D13;
+    --ink-soft: #404633;
+    --muted: #878D79;
+    --faint: #B4B9A8;
+    --line: #EEF0E7;
+    --line-mid: #E4E7DA;
+    --accent: #7CB500;
+    --accent-deep: #5E8A00;
+    --dash: #CBD0BF;
+    --t1: #FAFCF0;
+    --t2: #F3F8DF;
+    --t3: #E9F3C6;
+    --h1: #F5FAE6;
+    --h2: #EDF5CF;
+    --h3: #E0EEB2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI",
+      "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.4;
+  }
+  .page { max-width: 920px; margin: 0 auto; padding: clamp(20px,4vw,40px) 16px 64px; }
+  .page-note { text-align: center; color: var(--muted); font-size: 13px; margin: 0 auto 28px; max-width: 34em; line-height: 1.6; }
+  .page-note b { color: var(--ink-soft); }
+
+  .pair { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; align-items: flex-start; }
+  .chart-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .chart-cap { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+  .chart { width: 392px; max-width: calc(100vw - 32px); background: var(--card); overflow: hidden; }
+  .chart-head { padding: 20px 20px 14px; text-align: center; }
+  .chart-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -.02em; margin: 0; color: var(--ink); }
+  .chart-head p { font-size: 13.5px; margin: 5px 0 0; color: var(--muted); font-weight: 500; letter-spacing: .02em; }
+
+  .matrix { display: grid; grid-template-columns: minmax(106px, 1.4fr) repeat(3, 1fr); column-gap: 5px; }
+
+  .cell {
+    padding: 8px 4px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: 13.5px; min-width: 0;
+  }
+  .cell.label { justify-content: flex-start; text-align: left; padding-left: 16px; padding-right: 4px; color: var(--ink-soft); font-weight: 600; line-height: 1.22; font-size: 13.5px; }
+  .cell.label i { display: block; font-style: normal; font-weight: 600; font-size: 9.5px; color: var(--faint); letter-spacing: .02em; margin-top: 1.5px; }
+
+  .c1 { background: var(--t1); }
+  .c2 { background: var(--t2); }
+  .c3 { background: var(--t3); }
+
+  .cell.khead { flex-direction: column; justify-content: flex-end; gap: 0; padding: 10px 0 0; align-self: stretch; background: transparent; }
+  .khead .badge {
+    color: var(--accent-deep); white-space: nowrap;
+    font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .khead .kn { font-size: 13.5px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; line-height: 1.2; padding: 7px 0; white-space: nowrap; display: block; width: 100%; text-align: center; }
+  .khead.c1 .kn { background: var(--h1); }
+  .khead.c2 .kn { background: var(--h2); }
+  .khead.c3 .kn { background: var(--h3); }
+  .corner { justify-content: flex-start; text-align: left; padding-left: 16px; align-items: flex-end; padding-bottom: 9px; font-size: 9.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+  .section {
+    grid-column: 1 / -1;
+    color: var(--faint);
+    font-size: 9.5px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+    padding: 9px 16px 3px;
+    border-top: 1px solid var(--line-mid);
+  }
+
+  .ic { display: grid; place-items: center; }
+  .ic svg { stroke: var(--accent-deep); }
+  .dash { color: var(--dash); font-weight: 600; }
+  .val { font-weight: 700; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-size: 13.5px; line-height: 1.2; }
+  .c3 .val { color: var(--accent-deep); }
+  .val i { display: block; font-style: normal; font-weight: 600; font-size: 9.5px; color: var(--faint); letter-spacing: .02em; margin-top: 1.5px; }
+  .c3 .val i { color: var(--accent-deep); opacity: .6; }
+
+  .chart-foot {
+    margin-top: 0; border-top: 1px solid var(--line-mid);
+    padding: 10px 16px 14px;
+    font-size: 9.5px; color: var(--faint); line-height: 1.5; letter-spacing: .02em;
+    text-align: center;
+  }
+</style>
+
+<div class="page">
+  <p class="page-note"><b>套装对比图</b> —— 不含价格（价格变动无需改图）。国内版（中文）/ 国际版（英文）各一张。</p>
+  <div class="pair" id="charts"></div>
+</div>
+
+<script>
+  const CHECK = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+
+  const DATA = {
+    zh: {
+      title: 'ATOM 套装对比', sub: '配件越全 · 赠送越多 · 越超值', corner: '选择套装',
+      kits: [
+        { n: '单机版' },
+        { n: '精练套装' },
+        { n: '旗舰套装', badge: '最超值' }
+      ],
+      rows: [
+        { section: '主机' },
+        { label: 'ATOM 口袋 AI 私教机', v: [true, true, true] },
+        { section: '配件' },
+        { label: '三脚架',     v: [false, true, true] },
+        { label: '磁吸底座',   v: [false, true, true] },
+        { label: '镜头隐私帽', v: [false, false, true] },
+        { label: '收纳包',     v: [false, false, true] },
+        { section: '软件会员权益' },
+        { label: 'Pro 会员',  v: [ {t:'1 个月', c:'盒内附赠'}, {t:'1 个月', c:'盒内附赠'}, {t:'1 个月', c:'盒内附赠'} ] },
+        { label: 'Plus 会员', v: [ {t:'3 个月', c:'套装赠送'}, {t:'6 个月', c:'套装赠送'}, {t:'12 个月', c:'套装赠送'} ] }
+      ],
+      foot: '✓ 含 · — 不含'
+    },
+    en: {
+      title: 'Compare ATOM Kits', sub: 'More gear, more perks, more value', corner: 'Choose Kits',
+      kits: [
+        { n: 'Stand<br>Alone' },
+        { n: 'Training<br>Kit' },
+        { n: 'Performance<br>Kit', badge: 'Best Value' }
+      ],
+      rows: [
+        { section: 'Device' },
+        { label: 'ATOM AI Fitness Companion', v: [true, true, true] },
+        { section: 'Accessories' },
+        { label: 'Gym Tripod',  v: [false, true, true] },
+        { label: 'Tripod Dock', v: [false, true, true] },
+        { label: 'Styling Cap', v: [false, false, true] },
+        { label: 'Pocket Bag',  v: [false, false, true] },
+        { section: 'Software Membership' },
+        { label: 'Pro', labelSub: '1 mo in every box', v: [ {t:'+1 mo', c:'with kit'}, {t:'+3 mo', c:'with kit'}, {t:'+12 mo', c:'with kit'} ] },
+        { label: 'Plus', v: [ {t:'Lifetime', c:'with kit'}, {t:'Lifetime', c:'with kit'}, {t:'Lifetime', c:'with kit'} ] }
+      ],
+      foot: '✓ Included · — Not included · Pro = 2 / 4 / 13 mo in total'
+    }
+  };
+
+  function cellVal(v) {
+    if (v === true) return `<span class="ic">${CHECK}</span>`;
+    if (v === false) return `<span class="dash">—</span>`;
+    if (v && v.t) return `<span class="val">${v.t}<i>${v.c || ''}</i></span>`;
+    return `<span class="val">${v}</span>`;
+  }
+
+  function buildChart(d, capText, lang) {
+    const colCls = ['c1', 'c2', 'c3'];
+    let cells = `<div class="cell corner">${d.corner}</div>`;
+    d.kits.forEach((k, i) => {
+      cells += `<div class="cell khead ${colCls[i]}">
+        ${k.badge ? `<span class="badge">${k.badge}</span>` : ''}
+        <span class="kn">${k.n}</span>
+      </div>`;
+    });
+    d.rows.forEach((r, ri) => {
+      if (r.section) { cells += `<div class="section">${r.section}</div>`; return; }
+      const last = ri === d.rows.length - 1 ? ' lastrow' : '';
+      cells += `<div class="cell label"><span>${r.label}${r.labelSub ? `<i>${r.labelSub}</i>` : ''}</span></div>`;
+      r.v.forEach((val, i) => {
+        cells += `<div class="cell ${colCls[i]}${last}">${cellVal(val)}</div>`;
+      });
+    });
+    return `<div class="chart-wrap">
+      <span class="chart-cap">${capText}</span>
+      <div class="chart ${lang || ''}">
+        <div class="chart-head">
+          <h2>${d.title}</h2>
+          <p>${d.sub}</p>
+        </div>
+        <div class="matrix">${cells}</div>
+        <div class="chart-foot">${d.foot}</div>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('charts').innerHTML =
+    buildChart(DATA.zh, '国内版 · 中文', 'zh') + buildChart(DATA.en, 'Global · English', 'en');
+</script>
