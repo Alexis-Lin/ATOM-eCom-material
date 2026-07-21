@@ -22,15 +22,15 @@
   .chart { width: 400px; max-width: calc(100vw - 32px); background: var(--card); overflow: hidden; }
 
   /* compact header: 标题 + 促销合并为一块 */
-  .top { padding: 11px 14px 0; text-align: center; }
+  .top { padding: 12px 14px 9px; text-align: center; }
   .top h2 { font-size: 17px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 6px; }
-  .gift { padding: 7px 12px; border-radius: var(--r);
+  .gift { margin: 0 0 10px; padding: 8px 14px; text-align: center;
     background: linear-gradient(90deg, #E7F3C6, #F6E6A6);
     font-size: 13.5px; font-weight: 800; color: var(--ink); letter-spacing: .01em; }
   .gift .pro { color: var(--ink3d); } .gift .plus { color: var(--ink2); }
   .gift small { display: block; font-size: 9.5px; font-weight: 600; color: var(--ink-soft); margin-top: 1px; opacity: .85; }
 
-  .cols { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 5px; row-gap: 0; margin-top: 9px; }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 5px; row-gap: 0; margin-top: 0; }
   .cell { padding: 0 7px; min-width: 0; }
   .cell.c1 { background: var(--t1); }
   .cell.c2 { background: var(--t2); }
@@ -54,9 +54,9 @@
   .c1 .device span { color: var(--ink2); } .c2 .device span, .c3 .device span { color: var(--muted); }
 
   /* band 3 — inheritance (统一绿色字) */
-  .inh { padding-bottom: 7px; }
-  .inh span { display: block; text-align: center; font-size: 11px; font-weight: 800;
-    padding: 4px 4px; border-radius: var(--r); line-height: 1.2; color: var(--inh-tx); background: var(--inh-bg); }
+  .inh { padding-bottom: 8px; }
+  .inh span { display: block; text-align: center; font-size: 11.5px; font-weight: 800;
+    line-height: 1.2; color: var(--inh-tx); }
 
   /* band 4 — features */
   .feats { padding-bottom: 9px; }
@@ -68,9 +68,8 @@
   .c1 .feats .dot svg { stroke: var(--ink1); }
   .c2 .feats .dot svg { stroke: var(--ink2); }
   .c3 .feats .dot svg { stroke: var(--ink3d); }
-  .feats .mini { font-size: 8px; font-weight: 800; letter-spacing: .04em; margin-left: 4px;
-    padding: 1px 4px; border-radius: var(--r); border: 1px solid currentColor; white-space: nowrap; }
-  .c3 .feats li.soonli .mini { color: var(--ink3); }
+  .feats .mini { font-size: 8.5px; font-weight: 700; letter-spacing: .04em; margin-left: 5px;
+    color: var(--faint); white-space: nowrap; }
 
   /* band 5 — quota (小字号) */
   .quota { padding-bottom: 10px; }
@@ -85,7 +84,7 @@
   .c1 .qline .qv { color: var(--ink1); } .c2 .qline .qv { color: var(--ink2); } .c3 .qline .qv { color: var(--ink3d); }
   .qline .qv.off { color: var(--dash); font-weight: 600; }
 
-  .chart-foot { border-top: 1px solid var(--line-mid); padding: 8px 14px 11px; font-size: 8.5px;
+  .chart-foot { border-top: 1px solid var(--line-mid); padding: 8px 14px 10px; font-size: 8px;
     color: var(--faint); line-height: 1.55; text-align: center; }
 </style>
 
@@ -114,7 +113,7 @@
                   { t: '亲友多账号', soon: true }],
           quota: ['无限', '200 小时/月', '200GB'] }
       ],
-      foot: 'Basic 手机 App 即可用，无需硬件 · Plus / Pro 需搭配 ATOM 设备<br>「即将」为开发中功能 · 会员与首次激活账号绑定 · Plus/Pro 为 ATOM App 会员（BodyPark），与电商平台会员无关'
+      foot: 'Basic 手机 App 即可用 · Plus / Pro 需 ATOM 设备 · 会员随机附赠并与激活账号绑定<br>Plus / Pro 为 ATOM App 会员（BodyPark），非电商平台会员'
     },
     en: {
       title: 'Membership Tiers',
@@ -132,7 +131,7 @@
                   { t: 'Family accounts', soon: true }],
           quota: ['Unlimited', '200 hrs/mo', '200GB'] }
       ],
-      foot: 'Basic works on the phone app, no hardware · Plus / Pro require an ATOM device<br>"Soon" = in development · membership bound to activating account · Plus/Pro are ATOM App memberships (by BodyPark)'
+      foot: 'Basic runs on the phone app · Plus / Pro need an ATOM device · membership bound to activating account<br>Plus / Pro are ATOM App memberships (BodyPark), not a store membership'
     }
   };
 
@@ -160,7 +159,8 @@
     });
     return `<div class="chart-wrap"><span class="chart-cap">${capText}</span>
       <div class="chart ${lang}">
-        <div class="top"><h2>${d.title}</h2><div class="gift">${d.gift}</div></div>
+        <div class="top"><h2>${d.title}</h2></div>
+        <div class="gift">${d.gift}</div>
         <div class="cols">${cells}</div>
         <div class="chart-foot">${d.foot}</div>
       </div></div>`;
