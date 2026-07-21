@@ -18,52 +18,61 @@
   .chart-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
   .chart-cap { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 
+  /* ===== shared type scale: title 20 · subtitle 13.5 · tier 14 · body 12 · caption 9.5 ===== */
   .chart { width: 400px; max-width: calc(100vw - 32px); background: var(--card); overflow: hidden; }
-  .chart-head { padding: 20px 20px 14px; text-align: center; }
+  .chart-head { padding: 20px 20px 12px; text-align: center; }
   .chart-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -.02em; margin: 0; }
-  .chart-head p { font-size: 13px; margin: 5px 0 0; color: var(--muted); font-weight: 500; }
-  .chart-head p b { color: var(--ink2); font-weight: 700; }
+  .chart-head p { font-size: 13.5px; margin: 5px 0 0; color: var(--muted); font-weight: 500; }
 
-  /* horizontal bands: every cell in a band shares one row -> same height across columns */
+  /* gift banner — 购机即送会员 · 直角满幅 */
+  .gift { padding: 11px 14px; background: linear-gradient(90deg, #E7F3C6, #F6E6A6);
+    text-align: center; font-size: 13.5px; font-weight: 800; color: var(--ink); letter-spacing: .01em; }
+  .gift .pro { color: var(--ink3d); } .gift .plus { color: var(--ink2); }
+  .gift small { display: block; font-size: 10px; font-weight: 600; color: var(--ink-soft); margin-top: 2px; opacity: .85; }
+
   .cols { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 5px; row-gap: 0; }
   .cell { padding: 0 7px; min-width: 0; }
   .cell.c1 { background: var(--t1); }
   .cell.c2 { background: var(--t2); }
   .cell.c3 { background: var(--t3); }
 
-  /* band 1 — header */
-  .head { padding-top: 12px; padding-bottom: 10px; display: flex; flex-direction: column; align-items: center; }
+  /* band 1 — header (black card, 直角) */
+  .head { padding: 14px 3px 10px; display: flex; flex-direction: column; align-items: center; }
   .role { font-size: 9.5px; font-weight: 700; letter-spacing: .04em; margin-bottom: 5px; }
   .c1 .role { color: var(--ink1); } .c2 .role { color: var(--ink2); } .c3 .role { color: var(--ink3); }
   .card-tag { display: inline-flex; flex-direction: column; align-items: center;
-    background: var(--black); border-radius: 7px; padding: 6px 12px 5px; }
-  .card-tag .ct-en { font-size: 14px; font-weight: 800; line-height: 1.05; }
+    background: var(--black); padding: 6px 12px 5px; }
+  .card-tag .ct-en { font-size: 13.5px; font-weight: 800; line-height: 1.05; }
   .card-tag .ct-cn { font-size: 9px; font-weight: 700; letter-spacing: .04em; margin-top: 2px; opacity: .92; }
   .c1 .card-tag .ct-en, .c1 .card-tag .ct-cn { color: var(--card1); }
   .c2 .card-tag .ct-en, .c2 .card-tag .ct-cn { color: var(--card2); }
   .c3 .card-tag .ct-en, .c3 .card-tag .ct-cn { color: var(--card3); }
 
-  /* band 2 — inheritance */
+  /* band 2 — inheritance (highlighted, 直角) */
   .inh { padding-bottom: 10px; }
-  .inh span { display: block; text-align: center; font-size: 10.5px; font-weight: 800;
-    padding: 5px 4px; border-radius: 5px; line-height: 1.2; }
+  .inh span { display: block; text-align: center; font-size: 11px; font-weight: 800;
+    padding: 6px 4px; line-height: 1.2; }
   .c1 .inh span { color: var(--ink1); background: var(--q1); }
-  .c2 .inh span { color: var(--ink2); background: #E4F2C0; }
-  .c3 .inh span { color: var(--ink3d); background: #F5E29C; }
+  .c2 .inh span { color: #3F5E00; background: #D4EA92; }
+  .c3 .inh span { color: #5A4700; background: #F0D877; }
 
   /* band 3 — features */
   .feats { padding-bottom: 12px; }
   .feats ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
-  .feats li { display: flex; gap: 5px; align-items: flex-start; font-size: 11.5px; font-weight: 600; color: var(--ink-soft); line-height: 1.25; }
+  .feats li { display: flex; gap: 5px; align-items: flex-start; font-size: 12px; font-weight: 600; color: var(--ink-soft); line-height: 1.25; }
   .feats .dot { flex-shrink: 0; margin-top: 1px; }
   .feats .dot svg { display: block; }
   .c1 .feats .dot svg { stroke: var(--ink1); }
   .c2 .feats .dot svg { stroke: var(--ink2); }
   .c3 .feats .dot svg { stroke: var(--ink3d); }
+  .feats .mini { flex-shrink: 0; font-size: 8.5px; font-weight: 800; letter-spacing: .04em;
+    padding: 1px 5px; border: 1px solid currentColor; margin-top: 1px; }
+  .c3 .feats li.soonli { color: var(--ink3); }
+  .c3 .feats li.soonli .mini { color: var(--ink3); }
 
-  /* band 4 — quota (same three metrics in every column -> row-by-row alignment) */
-  .quota { padding-bottom: 11px; }
-  .quota .box { border-radius: 6px; padding: 9px 5px; }
+  /* band 4 — quota (三列逐行对齐, 直角) */
+  .quota { padding-bottom: 13px; }
+  .quota .box { padding: 9px 5px; }
   .c1 .quota .box { background: var(--q1); } .c2 .quota .box { background: var(--q2); } .c3 .quota .box { background: var(--q3); }
   .quota .qh { font-size: 8.5px; font-weight: 800; letter-spacing: .12em; margin-bottom: 6px; }
   .c1 .quota .qh { color: var(--ink1); } .c2 .quota .qh { color: var(--ink2); } .c3 .quota .qh { color: var(--ink3d); }
@@ -74,73 +83,87 @@
   .c1 .qline .qv { color: var(--ink1); } .c2 .qline .qv { color: var(--ink2); } .c3 .qline .qv { color: var(--ink3d); }
   .qline .qv.off { color: var(--dash); font-weight: 600; }
 
-  /* band 5 — coming soon */
-  .soonband { padding-bottom: 13px; min-height: 30px; display: flex; flex-direction: column; gap: 6px; }
-  .soonband .s { display: flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; line-height: 1.3; }
-  .soonband .tag { font-size: 8.5px; font-weight: 800; letter-spacing: .06em;
-    padding: 1px 6px; border-radius: 999px; border: 1px solid currentColor; flex-shrink: 0; }
-  .c2 .soonband .s { color: var(--ink2); } .c3 .soonband .s { color: var(--ink3); }
-
   .chart-foot { border-top: 1px solid var(--line-mid); padding: 10px 16px 14px; font-size: 9.5px;
     color: var(--faint); line-height: 1.6; text-align: center; }
 </style>
 
 <div class="page">
-  <p class="page-note"><b>会员权益图 · 简洁版</b> —— 横向分带，三列的用量与备注严格对齐在同一高度。</p>
+  <p class="page-note"><b>会员权益图 · 简洁版</b> —— 中英双语 · 全直角 · 交付 @3x 高清。</p>
   <div class="pair" id="charts"></div>
 </div>
 
 <script>
   const DOT = '<span class="dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>';
 
-  const D = {
-    title: '三档会员体系', sub: '匹配训练阶段 · <b>买 ATOM 即享 Plus</b>',
-    quotaKeys: ['AI 对话', '实时指导', '云端存储'],
-    cols: [
-      { cls: 'c1', role: '入门训练', en: 'Basic', cn: '免费版', inh: '基础功能',
-        feats: ['基础动作库', '手动编排课程', '自助训练日志', '手表心率同步'],
-        quota: ['10 次/月', null, null] },
-      { cls: 'c2', role: '日常训练', en: 'Plus', cn: '进阶会员', inh: '含 Basic 全部',
-        feats: ['智能训练计划', '自动计数计次', '动作指导与纠错', '课后训练报告', '视频存储与回放', 'TV 投屏训练'],
-        quota: ['100 次/月', '20 小时/月', '5GB'] },
-      { cls: 'c3', role: '进阶提升', en: 'Pro', cn: '专业会员', inh: '含 Plus 全部',
-        feats: ['动作质量分析', '力线分析', 'VBT 速度分析', '高级课后报告'],
-        quota: ['无限', '200 小时/月', '200GB'],
-        soon: ['自由动作识别', '亲友多账号'] }
-    ],
-    foot: '基础功能永久免费 · 每台 ATOM 随机附赠 Plus 进阶会员 ·「即将」为开发中功能<br>Plus / Pro 为 ATOM App 会员（BodyPark），与电商平台会员无关'
+  const DATA = {
+    zh: {
+      title: '三档会员体系', sub: '三档权益 · 匹配你的训练阶段',
+      gift: '购买 ATOM 主机，即送 <span class="pro">Pro</span> + <span class="plus">Plus</span> 会员<small>基础功能永久免费 · 无需额外购买会员</small>',
+      quotaKeys: ['AI 对话', '实时指导', '云端存储'], soon: '即将',
+      cols: [
+        { cls: 'c1', role: '入门训练', en: 'Basic', cn: '免费版', inh: '基础功能',
+          feats: ['基础动作库', '手动编排课程', '自助训练日志', '手表心率同步'],
+          quota: ['10 次/月', null, null] },
+        { cls: 'c2', role: '日常训练', en: 'Plus', cn: '进阶会员', inh: '含 Basic 全部',
+          feats: ['智能训练计划', '自动计数计次', '动作指导与纠错', '课后训练报告', '视频存储与回放', 'TV 投屏训练'],
+          quota: ['100 次/月', '20 小时/月', '5GB'] },
+        { cls: 'c3', role: '进阶提升', en: 'Pro', cn: '专业会员', inh: '含 Plus 全部',
+          feats: ['动作质量分析', '力线分析', 'VBT 速度分析', '高级课后报告',
+                  { t: '自由动作识别', soon: true }, { t: '亲友多账号', soon: true }],
+          quota: ['无限', '200 小时/月', '200GB'] }
+      ],
+      foot: '✓ 含 · — 不含 ·「即将」为开发中功能，未来版本升级解锁 · 会员与首次激活账号绑定<br>Plus / Pro 为 ATOM App 会员（BodyPark），与电商平台会员无关'
+    },
+    en: {
+      title: 'Membership Tiers', sub: 'Three tiers · matched to your stage',
+      gift: 'Every ATOM includes <span class="pro">Pro</span> + <span class="plus">Plus</span> membership<small>Basic is free forever · no extra purchase needed</small>',
+      quotaKeys: ['AI chats', 'Live', 'Storage'], soon: 'Soon',
+      cols: [
+        { cls: 'c1', role: 'Beginner', en: 'Basic', cn: 'Free', inh: 'Base features',
+          feats: ['Exercise library', 'Manual plan builder', 'Self-log training', 'Watch HR sync'],
+          quota: ['10/mo', null, null] },
+        { cls: 'c2', role: 'Everyday', en: 'Plus', cn: 'Member', inh: 'All of Basic',
+          feats: ['Adaptive plans', 'Auto rep-counting', 'Form guidance & fix', 'Workout reports', 'Recording & replay', 'TV casting'],
+          quota: ['100/mo', '20 hrs/mo', '5GB'] },
+        { cls: 'c3', role: 'Advanced', en: 'Pro', cn: 'Member', inh: 'All of Plus',
+          feats: ['Form insights', 'Bar-path analysis', 'VBT analysis', 'Advanced reports',
+                  { t: 'Free-form tracking', soon: true }, { t: 'Family accounts', soon: true }],
+          quota: ['Unlimited', '200 hrs/mo', '200GB'] }
+      ],
+      foot: '✓ Included · — Not included · "Soon" = in development · membership bound to the activating account<br>Plus / Pro are ATOM App memberships (by BodyPark), unrelated to any store membership'
+    }
   };
 
   const band = (cls, extra, inner) => `<div class="cell ${cls} ${extra}">${inner}</div>`;
 
-  let cells = '';
-  // band 1 — header
-  D.cols.forEach(c => cells += band(c.cls, 'head',
-    `<span class="role">${c.role}</span>
-     <span class="card-tag"><span class="ct-en">${c.en}</span><span class="ct-cn">${c.cn}</span></span>`));
-  // band 2 — inheritance
-  D.cols.forEach(c => cells += band(c.cls, 'inh', `<span>${c.inh}</span>`));
-  // band 3 — features
-  D.cols.forEach(c => cells += band(c.cls, 'feats',
-    `<ul>${c.feats.map(f => `<li>${DOT}<span>${f}</span></li>`).join('')}</ul>`));
-  // band 4 — quota
-  D.cols.forEach(c => {
-    const lines = D.quotaKeys.map((k, i) => {
-      const v = c.quota[i];
-      return `<div class="qline"><span class="qk">${k}</span><span class="qv${v ? '' : ' off'}">${v || '—'}</span></div>`;
-    }).join('');
-    cells += band(c.cls, 'quota', `<div class="box"><div class="qh">使用额度</div>${lines}</div>`);
-  });
-  // band 5 — coming soon (可多条)
-  D.cols.forEach(c => cells += band(c.cls, 'soonband',
-    (c.soon || []).map(s => `<span class="s"><span class="tag">即将</span><span>${s}</span></span>`).join('')));
-
-  document.getElementById('charts').innerHTML = `
-    <div class="chart-wrap"><span class="chart-cap">国内版 · 简洁</span>
-      <div class="chart">
-        <div class="chart-head"><h2>${D.title}</h2><p>${D.sub}</p></div>
+  function buildChart(d, capText, lang) {
+    let cells = '';
+    d.cols.forEach(c => cells += band(c.cls, 'head',
+      `<span class="role">${c.role}</span>
+       <span class="card-tag"><span class="ct-en">${c.en}</span><span class="ct-cn">${c.cn}</span></span>`));
+    d.cols.forEach(c => cells += band(c.cls, 'inh', `<span>${c.inh}</span>`));
+    d.cols.forEach(c => cells += band(c.cls, 'feats',
+      `<ul>${c.feats.map(f => {
+        const it = (typeof f === 'string') ? { t: f } : f;
+        const lead = it.soon ? `<span class="mini">${d.soon}</span>` : DOT;
+        return `<li class="${it.soon ? 'soonli' : ''}">${lead}<span>${it.t}</span></li>`;
+      }).join('')}</ul>`));
+    d.cols.forEach(c => {
+      const lines = d.quotaKeys.map((k, i) => {
+        const v = c.quota[i];
+        return `<div class="qline"><span class="qk">${k}</span><span class="qv${v ? '' : ' off'}">${v || '—'}</span></div>`;
+      }).join('');
+      cells += band(c.cls, 'quota', `<div class="box"><div class="qh">${lang === 'en' ? 'USAGE' : '使用额度'}</div>${lines}</div>`);
+    });
+    return `<div class="chart-wrap"><span class="chart-cap">${capText}</span>
+      <div class="chart ${lang}">
+        <div class="chart-head"><h2>${d.title}</h2><p>${d.sub}</p></div>
+        <div class="gift">${d.gift}</div>
         <div class="cols">${cells}</div>
-        <div class="chart-foot">${D.foot}</div>
-      </div>
-    </div>`;
+        <div class="chart-foot">${d.foot}</div>
+      </div></div>`;
+  }
+
+  document.getElementById('charts').innerHTML =
+    buildChart(DATA.zh, '国内版 · 中文', 'zh') + buildChart(DATA.en, 'Global · English', 'en');
 </script>
