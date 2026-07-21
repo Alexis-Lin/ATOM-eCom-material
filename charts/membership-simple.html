@@ -2,10 +2,11 @@
   :root {
     --page: #F0F2EC; --card: #FFFFFF; --ink: #191D13; --ink-soft: #404633;
     --muted: #878D79; --faint: #B4B9A8; --line-mid: #E4E7DA; --dash: #C7CCBB;
-    --black: #17190F;
+    --black: #17190F; --r: 3px;
     --t1: #F5F6F3; --q1: #ECEEE8; --ink1: #6E7464; --card1: #C9CEBE;
     --t2: #F1F8DD; --q2: #E7F3C6; --ink2: #5E8A00; --card2: #AEE63F;
     --t3: #FBF3D4; --q3: #F6E6A6; --ink3: #9A7500; --ink3d: #45390F; --card3: #F3C63C;
+    --inh-bg: #D4EA92; --inh-tx: #3F5E00;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--page); color: var(--ink);
@@ -18,14 +19,14 @@
   .chart-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
   .chart-cap { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 
-  /* ===== shared type scale: title 20 · subtitle 13.5 · tier 14 · body 12 · caption 9.5 ===== */
   .chart { width: 400px; max-width: calc(100vw - 32px); background: var(--card); overflow: hidden; }
   .chart-head { padding: 20px 20px 12px; text-align: center; }
   .chart-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -.02em; margin: 0; }
   .chart-head p { font-size: 13.5px; margin: 5px 0 0; color: var(--muted); font-weight: 500; }
 
-  /* gift banner — 购机即送会员 · 直角满幅 */
-  .gift { padding: 11px 14px; background: linear-gradient(90deg, #E7F3C6, #F6E6A6);
+  /* gift banner — 购机即送会员 · 小圆角 */
+  .gift { margin: 0 14px 12px; padding: 11px 14px; border-radius: var(--r);
+    background: linear-gradient(90deg, #E7F3C6, #F6E6A6);
     text-align: center; font-size: 13.5px; font-weight: 800; color: var(--ink); letter-spacing: .01em; }
   .gift .pro { color: var(--ink3d); } .gift .plus { color: var(--ink2); }
   .gift small { display: block; font-size: 10px; font-weight: 600; color: var(--ink-soft); margin-top: 2px; opacity: .85; }
@@ -36,50 +37,50 @@
   .cell.c2 { background: var(--t2); }
   .cell.c3 { background: var(--t3); }
 
-  /* band 1 — header (black card, 直角) */
+  /* band 1 — header (black card, 小圆角) */
   .head { padding: 14px 3px 10px; display: flex; flex-direction: column; align-items: center; }
   .role { font-size: 9.5px; font-weight: 700; letter-spacing: .04em; margin-bottom: 5px; }
   .c1 .role { color: var(--ink1); } .c2 .role { color: var(--ink2); } .c3 .role { color: var(--ink3); }
   .card-tag { display: inline-flex; flex-direction: column; align-items: center;
-    background: var(--black); padding: 6px 12px 5px; }
+    background: var(--black); border-radius: var(--r); padding: 6px 12px 5px; }
   .card-tag .ct-en { font-size: 13.5px; font-weight: 800; line-height: 1.05; }
   .card-tag .ct-cn { font-size: 9px; font-weight: 700; letter-spacing: .04em; margin-top: 2px; opacity: .92; }
   .c1 .card-tag .ct-en, .c1 .card-tag .ct-cn { color: var(--card1); }
   .c2 .card-tag .ct-en, .c2 .card-tag .ct-cn { color: var(--card2); }
   .c3 .card-tag .ct-en, .c3 .card-tag .ct-cn { color: var(--card3); }
 
-  /* band 2 — inheritance (highlighted, 直角) */
+  /* band 2 — inheritance (含前档 · 统一绿色字体) */
   .inh { padding-bottom: 10px; }
   .inh span { display: block; text-align: center; font-size: 11px; font-weight: 800;
-    padding: 6px 4px; line-height: 1.2; }
+    padding: 6px 4px; border-radius: var(--r); line-height: 1.2; }
   .c1 .inh span { color: var(--ink1); background: var(--q1); }
-  .c2 .inh span { color: #3F5E00; background: #D4EA92; }
-  .c3 .inh span { color: #5A4700; background: #F0D877; }
+  .c2 .inh span { color: var(--inh-tx); background: var(--inh-bg); }
+  .c3 .inh span { color: var(--inh-tx); background: var(--inh-bg); }
 
   /* band 3 — features */
   .feats { padding-bottom: 12px; }
   .feats ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
   .feats li { display: flex; gap: 5px; align-items: flex-start; font-size: 12px; font-weight: 600; color: var(--ink-soft); line-height: 1.25; }
-  .feats .dot { flex-shrink: 0; margin-top: 1px; }
+  .feats .dot { flex-shrink: 0; margin-top: 2px; }
   .feats .dot svg { display: block; }
   .c1 .feats .dot svg { stroke: var(--ink1); }
   .c2 .feats .dot svg { stroke: var(--ink2); }
   .c3 .feats .dot svg { stroke: var(--ink3d); }
   .feats .mini { flex-shrink: 0; font-size: 8.5px; font-weight: 800; letter-spacing: .04em;
-    padding: 1px 5px; border: 1px solid currentColor; margin-top: 1px; }
+    padding: 1px 5px; border-radius: var(--r); border: 1px solid currentColor; margin-top: 1px; }
   .c3 .feats li.soonli { color: var(--ink3); }
   .c3 .feats li.soonli .mini { color: var(--ink3); }
 
-  /* band 4 — quota (三列逐行对齐, 直角) */
+  /* band 4 — quota (字号更小 · 逐行对齐 · 小圆角) */
   .quota { padding-bottom: 13px; }
-  .quota .box { padding: 9px 5px; }
+  .quota .box { padding: 8px 5px; border-radius: var(--r); }
   .c1 .quota .box { background: var(--q1); } .c2 .quota .box { background: var(--q2); } .c3 .quota .box { background: var(--q3); }
-  .quota .qh { font-size: 8.5px; font-weight: 800; letter-spacing: .12em; margin-bottom: 6px; }
+  .quota .qh { font-size: 8px; font-weight: 800; letter-spacing: .12em; margin-bottom: 5px; }
   .c1 .quota .qh { color: var(--ink1); } .c2 .quota .qh { color: var(--ink2); } .c3 .quota .qh { color: var(--ink3d); }
   .qline { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; font-variant-numeric: tabular-nums; }
-  .qline + .qline { margin-top: 5px; }
-  .qline .qk { font-size: 10px; font-weight: 600; color: var(--muted); white-space: nowrap; }
-  .qline .qv { font-size: 10.5px; font-weight: 800; white-space: nowrap; }
+  .qline + .qline { margin-top: 4px; }
+  .qline .qk { font-size: 9.5px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+  .qline .qv { font-size: 10px; font-weight: 800; white-space: nowrap; }
   .c1 .qline .qv { color: var(--ink1); } .c2 .qline .qv { color: var(--ink2); } .c3 .qline .qv { color: var(--ink3d); }
   .qline .qv.off { color: var(--dash); font-weight: 600; }
 
@@ -88,12 +89,12 @@
 </style>
 
 <div class="page">
-  <p class="page-note"><b>会员权益图 · 简洁版</b> —— 中英双语 · 全直角 · 交付 @3x 高清。</p>
+  <p class="page-note"><b>会员权益图 · 简洁版</b> —— 中英双语 · 小圆角 · 交付 @3x 高清。</p>
   <div class="pair" id="charts"></div>
 </div>
 
 <script>
-  const DOT = '<span class="dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>';
+  const DOT = '<span class="dot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>';
 
   const DATA = {
     zh: {
@@ -102,14 +103,14 @@
       quotaKeys: ['AI 对话', '实时指导', '云端存储'], soon: '即将',
       cols: [
         { cls: 'c1', role: '入门训练', en: 'Basic', cn: '免费版', inh: '基础功能',
-          feats: ['基础动作库', '手动编排课程', '自助训练日志', '手表心率同步'],
+          feats: ['常规课程库', '基础动作库', '手动编排课程', '自助训练日志', '手表心率同步', 'AI 教练对话'],
           quota: ['10 次/月', null, null] },
         { cls: 'c2', role: '日常训练', en: 'Plus', cn: '进阶会员', inh: '含 Basic 全部',
           feats: ['智能训练计划', '自动计数计次', '动作指导与纠错', '课后训练报告', '视频存储与回放', 'TV 投屏训练'],
           quota: ['100 次/月', '20 小时/月', '5GB'] },
         { cls: 'c3', role: '进阶提升', en: 'Pro', cn: '专业会员', inh: '含 Plus 全部',
-          feats: ['动作质量分析', '力线分析', 'VBT 速度分析', '高级课后报告',
-                  { t: '自由动作识别', soon: true }, { t: '亲友多账号', soon: true }],
+          feats: ['动作 ROM 幅度分析', '轨迹力线分析', 'VBT 速度分析', '高级课后报告', '特色动作与课程',
+                  { t: '亲友多账号', soon: true }],
           quota: ['无限', '200 小时/月', '200GB'] }
       ],
       foot: '✓ 含 · — 不含 ·「即将」为开发中功能，未来版本升级解锁 · 会员与首次激活账号绑定<br>Plus / Pro 为 ATOM App 会员（BodyPark），与电商平台会员无关'
@@ -120,14 +121,14 @@
       quotaKeys: ['AI chats', 'Live', 'Storage'], soon: 'Soon',
       cols: [
         { cls: 'c1', role: 'Beginner', en: 'Basic', cn: 'Free', inh: 'Base features',
-          feats: ['Exercise library', 'Manual plan builder', 'Self-log training', 'Watch HR sync'],
+          feats: ['Course library', 'Exercise library', 'Manual plan builder', 'Self-log training', 'Watch HR sync', 'AI coach chat'],
           quota: ['10/mo', null, null] },
         { cls: 'c2', role: 'Everyday', en: 'Plus', cn: 'Member', inh: 'All of Basic',
           feats: ['Adaptive plans', 'Auto rep-counting', 'Form guidance & fix', 'Workout reports', 'Recording & replay', 'TV casting'],
           quota: ['100/mo', '20 hrs/mo', '5GB'] },
         { cls: 'c3', role: 'Advanced', en: 'Pro', cn: 'Member', inh: 'All of Plus',
-          feats: ['Form insights', 'Bar-path analysis', 'VBT analysis', 'Advanced reports',
-                  { t: 'Free-form tracking', soon: true }, { t: 'Family accounts', soon: true }],
+          feats: ['ROM (range) analysis', 'Bar-path & trajectory', 'VBT analysis', 'Advanced reports', 'Signature classes',
+                  { t: 'Family accounts', soon: true }],
           quota: ['Unlimited', '200 hrs/mo', '200GB'] }
       ],
       foot: '✓ Included · — Not included · "Soon" = in development · membership bound to the activating account<br>Plus / Pro are ATOM App memberships (by BodyPark), unrelated to any store membership'
