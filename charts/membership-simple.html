@@ -26,7 +26,7 @@
 
   /* horizontal bands: every cell in a band shares one row -> same height across columns */
   .cols { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 5px; row-gap: 0; }
-  .cell { padding: 0 8px; min-width: 0; }
+  .cell { padding: 0 7px; min-width: 0; }
   .cell.c1 { background: var(--t1); }
   .cell.c2 { background: var(--t2); }
   .cell.c3 { background: var(--t3); }
@@ -63,19 +63,19 @@
 
   /* band 4 — quota (same three metrics in every column -> row-by-row alignment) */
   .quota { padding-bottom: 11px; }
-  .quota .box { border-radius: 6px; padding: 9px 8px; }
+  .quota .box { border-radius: 6px; padding: 9px 5px; }
   .c1 .quota .box { background: var(--q1); } .c2 .quota .box { background: var(--q2); } .c3 .quota .box { background: var(--q3); }
   .quota .qh { font-size: 8.5px; font-weight: 800; letter-spacing: .12em; margin-bottom: 6px; }
   .c1 .quota .qh { color: var(--ink1); } .c2 .quota .qh { color: var(--ink2); } .c3 .quota .qh { color: var(--ink3d); }
-  .qline { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font-variant-numeric: tabular-nums; }
+  .qline { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; font-variant-numeric: tabular-nums; }
   .qline + .qline { margin-top: 5px; }
-  .qline .qk { font-size: 10.5px; font-weight: 600; color: var(--muted); white-space: nowrap; }
-  .qline .qv { font-size: 11.5px; font-weight: 800; white-space: nowrap; }
+  .qline .qk { font-size: 10px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+  .qline .qv { font-size: 10.5px; font-weight: 800; white-space: nowrap; }
   .c1 .qline .qv { color: var(--ink1); } .c2 .qline .qv { color: var(--ink2); } .c3 .qline .qv { color: var(--ink3d); }
   .qline .qv.off { color: var(--dash); font-weight: 600; }
 
   /* band 5 — coming soon */
-  .soonband { padding-bottom: 13px; min-height: 30px; }
+  .soonband { padding-bottom: 13px; min-height: 30px; display: flex; flex-direction: column; gap: 6px; }
   .soonband .s { display: flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; line-height: 1.3; }
   .soonband .tag { font-size: 8.5px; font-weight: 800; letter-spacing: .06em;
     padding: 1px 6px; border-radius: 999px; border: 1px solid currentColor; flex-shrink: 0; }
@@ -95,19 +95,18 @@
 
   const D = {
     title: '三档会员体系', sub: '匹配训练阶段 · <b>买 ATOM 即享 Plus</b>',
-    quotaKeys: ['对话', '实时', '存储'],
+    quotaKeys: ['AI 对话', '实时指导', '云端存储'],
     cols: [
       { cls: 'c1', role: '入门训练', en: 'Basic', cn: '免费版', inh: '基础功能',
-        feats: ['动作库与课程', '自主编排训练', '趋势与手表同步'],
+        feats: ['基础动作库', '手动编排课程', '自助训练日志', '手表心率同步'],
         quota: ['10 次/月', null, null] },
       { cls: 'c2', role: '日常训练', en: 'Plus', cn: '进阶会员', inh: '含 Basic 全部',
         feats: ['智能训练计划', '自动计数计次', '动作指导与纠错', '课后训练报告', '视频存储与回放', 'TV 投屏训练'],
-        quota: ['100 次/月', '20 小时/月', '5GB'],
-        soon: '自由动作识别' },
+        quota: ['100 次/月', '20 小时/月', '5GB'] },
       { cls: 'c3', role: '进阶提升', en: 'Pro', cn: '专业会员', inh: '含 Plus 全部',
-        feats: ['动作质量分析', '力线分析', 'VBT 速度分析'],
+        feats: ['动作质量分析', '力线分析', 'VBT 速度分析', '高级课后报告'],
         quota: ['无限', '200 小时/月', '200GB'],
-        soon: '多账号系统' }
+        soon: ['自由动作识别', '亲友多账号'] }
     ],
     foot: '基础功能永久免费 · 每台 ATOM 随机附赠 Plus 进阶会员 ·「即将」为开发中功能<br>Plus / Pro 为 ATOM App 会员（BodyPark），与电商平台会员无关'
   };
@@ -132,9 +131,9 @@
     }).join('');
     cells += band(c.cls, 'quota', `<div class="box"><div class="qh">使用额度</div>${lines}</div>`);
   });
-  // band 5 — coming soon
+  // band 5 — coming soon (可多条)
   D.cols.forEach(c => cells += band(c.cls, 'soonband',
-    c.soon ? `<span class="s"><span class="tag">即将</span><span>${c.soon}</span></span>` : ''));
+    (c.soon || []).map(s => `<span class="s"><span class="tag">即将</span><span>${s}</span></span>`).join('')));
 
   document.getElementById('charts').innerHTML = `
     <div class="chart-wrap"><span class="chart-cap">国内版 · 简洁</span>
