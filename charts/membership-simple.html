@@ -50,13 +50,12 @@
 
   /* band 2 — device requirement */
   .device { padding-bottom: 6px; text-align: center; }
-  .device span { font-size: 9px; font-weight: 700; letter-spacing: .02em; }
-  .c1 .device span { color: var(--ink2); } .c2 .device span, .c3 .device span { color: var(--muted); }
+  .device span { font-size: 9px; font-weight: 500; letter-spacing: .02em; color: var(--faint); }
 
   /* band 3 — inheritance (统一绿色字) */
   .inh { padding-bottom: 8px; }
   .inh span { display: block; text-align: center; font-size: 11.5px; font-weight: 800;
-    line-height: 1.2; color: var(--inh-tx); }
+    line-height: 1.2; color: var(--ink2); }
 
   /* band 4 — features */
   .feats { padding-bottom: 9px; }
@@ -65,9 +64,9 @@
   .zh .feats li > span { white-space: nowrap; }
   .feats .dot { flex-shrink: 0; margin-top: 1.5px; }
   .feats .dot svg { display: block; }
-  .c1 .feats .dot svg { stroke: var(--ink1); }
-  .c2 .feats .dot svg { stroke: var(--ink2); }
-  .c3 .feats .dot svg { stroke: var(--ink3d); }
+  .c1 .dot svg { stroke: var(--ink1); }
+  .c2 .dot svg { stroke: var(--ink2); }
+  .c3 .dot svg { stroke: var(--ink3d); }
   .feats .mini { font-size: 8.5px; font-weight: 700; letter-spacing: .04em; margin-left: 5px;
     color: var(--faint); white-space: nowrap; }
 
@@ -98,8 +97,8 @@
 
   const DATA = {
     zh: {
-      title: '三档会员体系',
-      gift: '购买 ATOM 主机，即送 <span class="pro">Pro</span> + <span class="plus">Plus</span> 会员<small>基础功能永久免费 · 无需额外购买会员</small>',
+      title: '灵活会员，按需升级',
+      gift: '购买 ATOM 主机，即送 <span class="plus">Plus</span> + <span class="pro">Pro</span> 会员<small>基础功能永久免费 · 无需额外购买会员</small>',
       quotaKeys: ['AI 对话', '实时指导', '云端存储'], soon: '即将',
       cols: [
         { cls: 'c1', role: '入门训练', en: 'Basic', cn: '免费版', device: '手机 App 即可用', inh: '基础功能',
@@ -116,8 +115,8 @@
       foot: 'Basic 手机 App 即可用 · Plus / Pro 需 ATOM 设备 · 会员随机附赠并与激活账号绑定<br>Plus / Pro 为 ATOM App 会员（BodyPark），非电商平台会员'
     },
     en: {
-      title: 'Membership Tiers',
-      gift: 'Every ATOM includes <span class="pro">Pro</span> + <span class="plus">Plus</span> membership<small>Basic is free forever · no extra purchase needed</small>',
+      title: 'Flexible Membership, Your Way',
+      gift: 'Every ATOM includes <span class="plus">Plus</span> + <span class="pro">Pro</span> membership<small>Basic is free forever · no extra purchase needed</small>',
       quotaKeys: ['AI chats', 'Live', 'Storage'], soon: 'Soon',
       cols: [
         { cls: 'c1', role: 'Beginner', en: 'Basic', cn: 'Free', device: 'Works on phone', inh: 'Base features',
