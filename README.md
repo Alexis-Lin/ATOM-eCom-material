@@ -19,6 +19,11 @@ assets/
     1-kit-global.png               Kit comparison
     2-membership-simple-global.png Membership · simple
     3-membership-detail-global.png Membership · detailed
+  guide/                           开箱快速指南（16 面小手册，单面 54 × 85.6 mm）
+    en/ 01–16-en.png               英文逐页 @3x（1500 × 2382 px）
+    cn/ 01–16-cn.png               中文逐页 @3x
+    quick-guide-print-en.pdf       打印用 PDF（54 × 85.6 mm × 16 页）
+    quick-guide-print-cn.pdf       中文打印 PDF
 ```
 
 **规格**：宽 **1272 / 1296 px**（424 / 432pt @3x），PNG，白底、**无边框、全直角**，高度随内容。可直接在手机查看或嵌入详情页。
@@ -55,9 +60,11 @@ charts/
   kit-compare.html          套装对比（中 + 英）
   membership-simple.html    会员 · 简洁版（中 + 英）
   membership-matrix.html    会员 · 详细版（中 + 英）
+  quick-guide.html          开箱快速指南 16 页排版稿（EN/中文切换 · 打印 CSS · ?page=N&lang=xx 单页导出）
 docs/
   decisions.md              命名 / 定价 / 会员政策 / 售前口径 / 待决
   regenerate.md             无头 Chrome 出图流程与校验基准
+  quick-guide-copy.md       快速指南：一致性核查 + 字号系统 + 双语精简文案表
 ```
 
 图表为纯 HTML/CSS（无依赖）。改数据编辑 `charts/*.html` 顶部 `DATA`，再按 `docs/regenerate.md` 用无头 Chrome 以 `--force-device-scale-factor=3` 导出 @3x。

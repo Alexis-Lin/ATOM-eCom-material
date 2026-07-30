@@ -1,0 +1,587 @@
+<title>ATOM Quick Guide · 16 页版式稿</title>
+<style>
+  /* ============ 画布（查看器）============ */
+  :root{
+    --canvas:#ece9e4; --canvas-ink:#2a2825; --canvas-mut:#8a857d;
+    --chip:#ffffff; --chip-bd:#d8d3cb; --accent:#5E8A00;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --canvas:#191a1c; --canvas-ink:#e8e6e1; --canvas-mut:#8b8d90; --chip:#232527; --chip-bd:#3a3d40; }
+  }
+  :root[data-theme="dark"]{ --canvas:#191a1c; --canvas-ink:#e8e6e1; --canvas-mut:#8b8d90; --chip:#232527; --chip-bd:#3a3d40; }
+  :root[data-theme="light"]{ --canvas:#ece9e4; --canvas-ink:#2a2825; --canvas-mut:#8a857d; --chip:#ffffff; --chip-bd:#d8d3cb; }
+
+  body{ background:var(--canvas); color:var(--canvas-ink);
+    font-family:"Helvetica Neue",Helvetica,Arial,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+    margin:0; padding:0 0 64px; }
+  .chrome{ position:sticky; top:0; z-index:9; background:var(--canvas);
+    border-bottom:1px solid var(--chip-bd); padding:14px 22px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .chrome h1{ font-size:15px; margin:0; font-weight:700; letter-spacing:.01em; }
+  .spec{ font-size:11px; color:var(--canvas-mut); letter-spacing:.04em; }
+  .spacer{ flex:1; }
+  .seg{ display:flex; border:1px solid var(--chip-bd); background:var(--chip); }
+  .seg button{ font:inherit; font-size:12px; padding:5px 14px; border:0; background:transparent;
+    color:var(--canvas-mut); cursor:pointer; }
+  .seg button[aria-pressed="true"]{ background:var(--canvas-ink); color:var(--canvas); }
+  .seg button:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+  .btn{ font:inherit; font-size:12px; padding:5px 14px; border:1px solid var(--chip-bd);
+    background:var(--chip); color:var(--canvas-ink); cursor:pointer; }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+
+  main{ max-width:1560px; margin:0 auto; padding:30px 22px; }
+  .hint{ font-size:12px; color:var(--canvas-mut); margin:0 0 26px; max-width:70ch; line-height:1.6; }
+  .book{ display:flex; flex-wrap:wrap; gap:34px 26px; align-items:flex-start; }
+  .group{ display:flex; flex-direction:column; gap:8px; }
+  .group .pair{ display:flex; gap:0; box-shadow:0 12px 34px rgba(0,0,0,.18); }
+  .group .pair .card + .card{ border-left:1px dashed #c9c9c9; }
+  .glabel{ font-size:11px; color:var(--canvas-mut); letter-spacing:.06em; }
+
+  /* ============ 卡片（成品页，恒白）============ */
+  .card{ --l:26px; --m:14px; --s:10.5px; --ink:#141414; --mut:#7d7d7d; --fill:#ededed;
+    width:320px; height:508px; background:#fff; color:var(--ink);
+    box-sizing:border-box; padding:24px 22px 18px; position:relative;
+    display:flex; flex-direction:column; flex:none; cursor:zoom-in; }
+  .card *{ box-sizing:border-box; }
+  .card .eyebrow{ font-size:var(--s); letter-spacing:.14em; color:var(--mut);
+    text-transform:uppercase; margin:0 0 6px; min-height:12px; }
+  .card h2{ font-size:var(--l); line-height:1.08; margin:0 0 10px; font-weight:700;
+    letter-spacing:-.01em; text-wrap:balance; }
+  .card .bar{ width:44px; height:5px; background:var(--ink); margin-bottom:14px; }
+  .card .cbody{ flex:1; display:flex; flex-direction:column; min-height:0; }
+  .card .cfoot{ display:flex; justify-content:space-between; font-size:var(--s);
+    color:var(--mut); padding-top:10px; }
+  .card .m{ font-size:var(--m); line-height:1.35; }
+  .card .s{ font-size:var(--s); line-height:1.45; color:var(--mut); }
+  .card .note{ font-size:var(--s); line-height:1.45; color:var(--mut);
+    border-top:1px solid #e2e2e2; padding-top:8px; }
+  .card .badge{ display:inline-block; font-size:var(--s); font-weight:700; letter-spacing:.05em;
+    background:var(--ink); color:#fff; padding:3px 8px; }
+  .card svg text{ font-family:inherit; fill:var(--ink); }
+  .card svg .txt-s{ font-size:10.5px; }
+  .card svg .txt-m{ font-size:14px; }
+  .card svg .mut{ fill:var(--mut); }
+
+  /* 封面 */
+  .card.cover{ justify-content:space-between; padding-top:44px; }
+  .card.cover h2{ font-size:var(--l); }
+  .card.cover .cover-title{ font-size:32px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  /* 封面标题是全册唯一例外档（仅封面页使用，仍满足"每页 ≤3 档"） */
+  .card.cover .wordmark{ font-weight:800; letter-spacing:.32em; font-size:var(--m); }
+
+  /* 灯箱 */
+  .lightbox{ position:fixed; inset:0; z-index:99; background:rgba(20,20,20,.72);
+    display:none; align-items:center; justify-content:center; cursor:zoom-out; }
+  .lightbox.open{ display:flex; }
+  .lightbox .holder{ transform:scale(1.5); box-shadow:0 30px 80px rgba(0,0,0,.5); }
+  @media (prefers-reduced-motion:no-preference){
+    .lightbox .holder{ transition:transform .15s ease; }
+  }
+
+  /* ============ 打印：54 × 85.6 mm 每页 ============ */
+  @page{ size:54mm 85.6mm; margin:0; }
+  @media print{
+    body{ background:#fff; padding:0; }
+    .chrome,.hint,.glabel,.lightbox{ display:none !important; }
+    main{ padding:0; max-width:none; }
+    .book,.group{ display:block; }
+    .group .pair{ display:block; box-shadow:none; }
+    .group .pair .card + .card{ border-left:0; }
+    .printbox{ width:54mm; height:85.6mm; overflow:hidden; page-break-after:always; }
+    .card{ transform:scale(.6378); transform-origin:0 0; cursor:default; }
+  }
+
+  /* ============ 单页导出模式（?page=N&lang=xx）============ */
+  body.export{ background:#fff; padding:0; }
+  body.export .chrome, body.export .hint, body.export .glabel, body.export .lightbox{ display:none; }
+  body.export main{ padding:0; max-width:none; }
+  body.export .book, body.export .group{ display:block; }
+  body.export .group .pair{ display:block; box-shadow:none; }
+  body.export .group .pair .card + .card{ border-left:0; }
+  body.export .card{ zoom:1.5625; cursor:default; }  /* 320 → 500 px */
+  body.export .card[data-hidden="1"]{ display:none; }
+</style>
+
+<div class="chrome">
+  <h1>ATOM Quick Guide · 排版稿</h1>
+  <span class="spec">16 面 = 8 张正反面 · 单面 54 × 85.6 mm（信用卡）· 每页 ≤ 3 字号</span>
+  <span class="spacer"></span>
+  <div class="seg" role="group" aria-label="Language">
+    <button id="lang-en" aria-pressed="true" onclick="setLang('en')">EN</button>
+    <button id="lang-zh" aria-pressed="false" onclick="setLang('zh')">中文</button>
+  </div>
+  <button class="btn" onclick="window.print()">打印 / PDF</button>
+</div>
+
+<main>
+  <p class="hint">按小册子对页排列（虚线 = 骑马钉中缝）。切换 EN / 中文可验证多语言不爆版；点击任意页放大。
+  「打印 / PDF」按 54 × 85.6 mm 逐页出 16 面。二维码为真实链接，可直接扫码验证。插图为 SVG 线稿示意，终稿由设计师 3D 渲染图替换。</p>
+  <div class="book" id="book"></div>
+</main>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')"><div class="holder" id="lb-holder"></div></div>
+
+<script>
+/* ============ 真实二维码（qrcode 库离线生成，29×29）============ */
+const QR_APP = "M0 0h7v1h-7zM8 0h3v1h-3zM12 0h1v1h-1zM15 0h3v1h-3zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM12 1h3v1h-3zM16 1h1v1h-1zM18 1h1v1h-1zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h7v1h-7zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM10 3h2v1h-2zM14 3h1v1h-1zM17 3h1v1h-1zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM10 4h6v1h-6zM18 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM15 5h1v1h-1zM17 5h2v1h-2zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h1v1h-1zM12 7h1v1h-1zM14 7h3v1h-3zM18 7h3v1h-3zM0 8h1v1h-1zM2 8h1v1h-1zM6 8h2v1h-2zM9 8h3v1h-3zM13 8h2v1h-2zM19 8h2v1h-2zM23 8h1v1h-1zM26 8h1v1h-1zM28 8h1v1h-1zM2 9h3v1h-3zM8 9h1v1h-1zM11 9h4v1h-4zM19 9h2v1h-2zM22 9h2v1h-2zM27 9h2v1h-2zM1 10h1v1h-1zM3 10h1v1h-1zM5 10h2v1h-2zM8 10h5v1h-5zM15 10h1v1h-1zM17 10h4v1h-4zM23 10h1v1h-1zM25 10h2v1h-2zM28 10h1v1h-1zM3 11h2v1h-2zM7 11h3v1h-3zM11 11h3v1h-3zM18 11h5v1h-5zM25 11h1v1h-1zM0 12h4v1h-4zM6 12h1v1h-1zM8 12h1v1h-1zM10 12h4v1h-4zM15 12h2v1h-2zM20 12h1v1h-1zM22 12h2v1h-2zM28 12h1v1h-1zM1 13h4v1h-4zM7 13h1v1h-1zM9 13h1v1h-1zM11 13h2v1h-2zM16 13h1v1h-1zM18 13h2v1h-2zM22 13h2v1h-2zM27 13h2v1h-2zM0 14h2v1h-2zM3 14h2v1h-2zM6 14h1v1h-1zM9 14h2v1h-2zM13 14h2v1h-2zM16 14h4v1h-4zM22 14h2v1h-2zM28 14h1v1h-1zM0 15h1v1h-1zM2 15h2v1h-2zM5 15h1v1h-1zM7 15h3v1h-3zM14 15h3v1h-3zM19 15h1v1h-1zM23 15h2v1h-2zM0 16h2v1h-2zM3 16h2v1h-2zM6 16h1v1h-1zM8 16h1v1h-1zM10 16h2v1h-2zM13 16h2v1h-2zM16 16h1v1h-1zM20 16h1v1h-1zM22 16h2v1h-2zM28 16h1v1h-1zM1 17h1v1h-1zM3 17h2v1h-2zM7 17h2v1h-2zM10 17h1v1h-1zM12 17h3v1h-3zM18 17h5v1h-5zM26 17h3v1h-3zM0 18h3v1h-3zM5 18h3v1h-3zM15 18h7v1h-7zM24 18h2v1h-2zM28 18h1v1h-1zM2 19h2v1h-2zM5 19h1v1h-1zM7 19h3v1h-3zM11 19h1v1h-1zM13 19h1v1h-1zM16 19h1v1h-1zM19 19h1v1h-1zM21 19h1v1h-1zM24 19h1v1h-1zM0 20h2v1h-2zM4 20h1v1h-1zM6 20h2v1h-2zM10 20h4v1h-4zM16 20h1v1h-1zM18 20h8v1h-8zM27 20h1v1h-1zM8 21h1v1h-1zM11 21h2v1h-2zM15 21h3v1h-3zM19 21h2v1h-2zM24 21h3v1h-3zM28 21h1v1h-1zM0 22h7v1h-7zM8 22h3v1h-3zM13 22h3v1h-3zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM28 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM10 23h1v1h-1zM14 23h1v1h-1zM16 23h1v1h-1zM19 23h2v1h-2zM24 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM9 24h1v1h-1zM12 24h3v1h-3zM16 24h1v1h-1zM19 24h7v1h-7zM27 24h2v1h-2zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM10 25h3v1h-3zM14 25h4v1h-4zM19 25h1v1h-1zM21 25h1v1h-1zM24 25h3v1h-3zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM10 26h2v1h-2zM14 26h7v1h-7zM24 26h1v1h-1zM27 26h2v1h-2zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM12 27h1v1h-1zM14 27h1v1h-1zM16 27h1v1h-1zM20 27h1v1h-1zM23 27h1v1h-1zM25 27h1v1h-1zM0 28h7v1h-7zM8 28h2v1h-2zM11 28h1v1h-1zM13 28h3v1h-3zM20 28h6v1h-6zM28 28h1v1h-1z";
+const QR_SUPPORT = "M0 0h7v1h-7zM11 0h3v1h-3zM16 0h4v1h-4zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM11 1h2v1h-2zM14 1h4v1h-4zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h3v1h-3zM13 2h2v1h-2zM16 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h1v1h-1zM11 3h1v1h-1zM13 3h3v1h-3zM18 3h2v1h-2zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM14 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM10 5h2v1h-2zM13 5h1v1h-1zM17 5h3v1h-3zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h1v1h-1zM12 7h3v1h-3zM16 7h2v1h-2zM20 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM9 8h2v1h-2zM14 8h2v1h-2zM17 8h4v1h-4zM24 8h1v1h-1zM27 8h1v1h-1zM0 9h4v1h-4zM5 9h1v1h-1zM8 9h1v1h-1zM12 9h1v1h-1zM14 9h2v1h-2zM21 9h2v1h-2zM25 9h1v1h-1zM28 9h1v1h-1zM1 10h2v1h-2zM4 10h1v1h-1zM6 10h2v1h-2zM10 10h4v1h-4zM17 10h1v1h-1zM22 10h1v1h-1zM26 10h3v1h-3zM2 11h1v1h-1zM4 11h2v1h-2zM7 11h3v1h-3zM11 11h2v1h-2zM15 11h1v1h-1zM17 11h2v1h-2zM21 11h2v1h-2zM24 11h1v1h-1zM27 11h1v1h-1zM2 12h1v1h-1zM4 12h3v1h-3zM10 12h1v1h-1zM16 12h2v1h-2zM19 12h4v1h-4zM25 12h1v1h-1zM27 12h2v1h-2zM1 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h2v1h-2zM15 13h4v1h-4zM20 13h4v1h-4zM25 13h1v1h-1zM28 13h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h3v1h-3zM10 14h2v1h-2zM14 14h5v1h-5zM20 14h2v1h-2zM23 14h1v1h-1zM25 14h1v1h-1zM27 14h2v1h-2zM0 15h1v1h-1zM2 15h4v1h-4zM7 15h2v1h-2zM10 15h1v1h-1zM13 15h2v1h-2zM16 15h3v1h-3zM22 15h1v1h-1zM25 15h1v1h-1zM27 15h1v1h-1zM1 16h2v1h-2zM4 16h1v1h-1zM6 16h2v1h-2zM12 16h1v1h-1zM14 16h4v1h-4zM21 16h3v1h-3zM25 16h1v1h-1zM27 16h2v1h-2zM1 17h1v1h-1zM4 17h2v1h-2zM7 17h2v1h-2zM10 17h1v1h-1zM14 17h2v1h-2zM17 17h2v1h-2zM20 17h3v1h-3zM25 17h2v1h-2zM28 17h1v1h-1zM0 18h1v1h-1zM4 18h1v1h-1zM6 18h3v1h-3zM10 18h1v1h-1zM12 18h2v1h-2zM16 18h1v1h-1zM21 18h3v1h-3zM27 18h2v1h-2zM1 19h4v1h-4zM7 19h1v1h-1zM12 19h1v1h-1zM15 19h5v1h-5zM21 19h1v1h-1zM25 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM6 20h1v1h-1zM9 20h2v1h-2zM12 20h1v1h-1zM17 20h1v1h-1zM20 20h5v1h-5zM8 21h4v1h-4zM13 21h1v1h-1zM16 21h5v1h-5zM24 21h1v1h-1zM26 21h3v1h-3zM0 22h7v1h-7zM9 22h1v1h-1zM11 22h2v1h-2zM14 22h1v1h-1zM16 22h1v1h-1zM18 22h3v1h-3zM22 22h1v1h-1zM24 22h2v1h-2zM27 22h2v1h-2zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM12 23h3v1h-3zM17 23h1v1h-1zM20 23h1v1h-1zM24 23h2v1h-2zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h1v1h-1zM10 24h3v1h-3zM14 24h1v1h-1zM17 24h1v1h-1zM20 24h5v1h-5zM28 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM9 25h1v1h-1zM14 25h1v1h-1zM16 25h4v1h-4zM24 25h1v1h-1zM26 25h3v1h-3zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM18 26h1v1h-1zM20 26h2v1h-2zM23 26h3v1h-3zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM11 27h1v1h-1zM13 27h1v1h-1zM16 27h2v1h-2zM20 27h3v1h-3zM24 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h2v1h-2zM15 28h3v1h-3zM19 28h7v1h-7zM27 28h2v1h-2z";
+</script>
+
+<script>
+/* ============ SVG 部件库（黑线 + 浅灰面，对齐初稿风格）============ */
+const INK = "#141414", MUT = "#7d7d7d", FILL = "#ededed";
+
+function qrSvg(path, size){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 29 29" role="img" aria-label="QR code"><path d="${path}" fill="${INK}"/></svg>`;
+}
+
+/* ATOM 正面 —— opts.power: 高亮电源键 */
+function atomFrontG(opts = {}){
+  const p = opts.power;
+  return `<g fill="none" stroke="${INK}" stroke-width="3">
+    <circle cx="118" cy="76" r="45"/>
+    <ellipse cx="70" cy="80" rx="9" ry="16"/>
+    <ellipse cx="166" cy="80" rx="9" ry="16"/>
+    <circle cx="112" cy="74" r="24"/>
+    <circle cx="112" cy="74" r="14" fill="${FILL}"/>
+    <circle cx="120" cy="212" r="88"/>
+    <ellipse cx="150" cy="134" rx="10" ry="7"/>
+    <circle cx="101" cy="216" r="56"/>
+    ${p
+      ? `<circle cx="185" cy="212" r="18" fill="${INK}"/>
+         <path d="M185 202v9" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+         <path d="M178.5 206a8.6 8.6 0 1 0 13 0" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`
+      : `<circle cx="185" cy="212" r="18"/>
+         <path d="M185 203v9" stroke-linecap="round"/>
+         <path d="M178.5 207a8.6 8.6 0 1 0 13 0" stroke-linecap="round"/>`}
+    <path d="M64 262l3 2" stroke-linecap="round"/>
+    <path d="M96 302h48" stroke-linecap="round" stroke-width="2"/>
+  </g>`;
+}
+function atomFront(w, opts = {}){
+  return `<svg width="${w}" viewBox="0 0 240 312">${atomFrontG(opts)}</svg>`;
+}
+
+/* ATOM 背面 */
+function atomRearG(){
+  return `<g fill="none" stroke="${INK}" stroke-width="3">
+    <path d="M74 92a46 46 0 0 1 88 0" stroke-width="14"/>
+    <circle cx="118" cy="84" r="40"/>
+    <circle cx="120" cy="212" r="88"/>
+    <circle cx="120" cy="204" r="50" fill="${FILL}" stroke-width="2.5"/>
+    <text x="120" y="209" text-anchor="middle" style="font-size:12px;font-weight:800;letter-spacing:.22em" fill="${INK}" stroke="none">BODYPARK</text>
+    <rect x="104" y="264" width="26" height="4" rx="2"/>
+    <rect x="102" y="276" width="32" height="8" rx="4"/>
+  </g>`;
+}
+
+/* 手机壳（内容注入） */
+function phone(w, inner){
+  const h = Math.round(w * 2);
+  return `<svg width="${w}" viewBox="0 0 120 240" fill="none" stroke="${INK}" stroke-width="3">
+    <rect x="4" y="4" width="112" height="232" rx="17"/>
+    <path d="M46 12h28" stroke-width="4" stroke-linecap="round"/>
+    ${inner}
+  </svg>`;
+}
+
+/* 小人（侧面站姿，朝左） */
+function person(x, y, h, extra = ""){
+  const r = h * .095;
+  return `<g stroke="${INK}" stroke-width="${Math.max(3, h*.05)}" stroke-linecap="round" fill="none" ${extra}>
+    <circle cx="${x}" cy="${y + r}" r="${r}" fill="#fff"/>
+    <path d="M${x} ${y + r*2.1} V${y + h*.58}"/>
+    <path d="M${x} ${y + h*.32} l${-h*.07} ${h*.16}"/>
+    <path d="M${x} ${y + h*.58} l${-h*.09} ${h*.4} M${x} ${y + h*.58} l${h*.07} ${h*.4}"/>
+  </g>`;
+}
+
+/* 三脚架上的 ATOM（朝右），returns group at (x,y)=脚架顶点 */
+function atomOnTripod(x, y){
+  return `<g stroke="${INK}" stroke-width="3" fill="#fff">
+    <path d="M${x} ${y}l-14 34M${x} ${y}l3 36M${x} ${y}l14 32" stroke-width="2.5"/>
+    <path d="M${x} ${y}v-8" stroke-width="2.5"/>
+    <circle cx="${x}" cy="${y-20}" r="12"/>
+    <circle cx="${x+3}" cy="${y-36}" r="7.5"/>
+    <circle cx="${x+6}" cy="${y-37}" r="2.5" fill="${INK}"/>
+  </g>`;
+}
+
+/* 摆放小场景：tile ~136×112, mode: tripod|box|floor|wall|high|blocked */
+function scene(mode){
+  const W = 132, H = 108, px = 100, ok = mode === "tripod" || mode === "box" || mode === "floor" || mode === "wall";
+  let dev = "", cone = "", extra = "", personY = 26, personH = 72;
+  const coneTo = (dx, dy, x2, y2, y3) => `<polygon points="${dx},${dy} ${x2},${y2} ${x2},${y3}" fill="${FILL}"/>`;
+  if (mode === "tripod"){ cone = coneTo(34, 52, px, 22, 96); dev = atomOnTripod(30, 72); }
+  if (mode === "box"){ cone = coneTo(36, 56, px, 22, 96);
+    dev = `<rect x="16" y="66" width="38" height="30" fill="${FILL}" stroke="${INK}" stroke-width="2.5"/>
+      <g stroke="${INK}" stroke-width="3" fill="#fff"><circle cx="34" cy="56" r="10"/><circle cx="37" cy="43" r="6.5"/><circle cx="40" cy="42" r="2.2" fill="${INK}"/></g>`; }
+  if (mode === "floor"){ cone = coneTo(34, 86, px, 24, 96);
+    dev = `<g stroke="${INK}" stroke-width="3" fill="#fff"><circle cx="30" cy="88" r="10"/><circle cx="34" cy="76" r="6.5"/><circle cx="37" cy="74" r="2.2" fill="${INK}"/></g>`; }
+  if (mode === "wall"){ cone = coneTo(30, 48, px, 20, 94);
+    dev = `<rect x="6" y="12" width="16" height="86" fill="${FILL}" stroke="${INK}" stroke-width="2.5"/>
+      <circle cx="12" cy="30" r="3" fill="${INK}" stroke="none"/><circle cx="12" cy="50" r="3" fill="${INK}" stroke="none"/><circle cx="12" cy="70" r="3" fill="${INK}" stroke="none"/>
+      <g stroke="${INK}" stroke-width="3" fill="#fff"><circle cx="30" cy="52" r="10"/><circle cx="33" cy="40" r="6.5"/><circle cx="36" cy="40" r="2.2" fill="${INK}"/></g>`; }
+  if (mode === "high"){ cone = `<polygon points="30,26 ${px-8},60 ${px-26},96" fill="${FILL}"/>`;
+    dev = `<path d="M26 96V34" stroke="${INK}" stroke-width="2.5"/>
+      <g stroke="${INK}" stroke-width="3" fill="#fff"><circle cx="26" cy="24" r="10"/><circle cx="30" cy="12" r="6.5" /><circle cx="33" cy="14" r="2.2" fill="${INK}"/></g>`; }
+  if (mode === "blocked"){ cone = coneTo(34, 52, 66, 34, 82);
+    dev = atomOnTripod(30, 72);
+    extra = `<rect x="60" y="30" width="18" height="66" fill="#fff" stroke="${INK}" stroke-width="2.5"/>`; }
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+    <path d="M4 96h124" stroke="#cfcfcf" stroke-width="2"/>
+    ${cone}${dev}${person(px, personY, personH)}${extra}
+    ${ok
+      ? `<path d="M106 8l7 8 13-14" stroke="${INK}" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
+      : `<path d="M104 4l18 18M122 4l-18 18" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>`}
+  </svg>`;
+}
+
+/* 图标（24×24 线稿） */
+const ico = {
+  download: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m0 0l-3-3m3 3l3-3"/></svg>`,
+  pair: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><circle cx="6" cy="9" r="3.2"/><circle cx="6.8" cy="14.5" r="4.6"/><rect x="15" y="4" width="7" height="14" rx="2"/><path d="M12.5 8.5h1.5M12.5 12h1.5" stroke-dasharray="1.5 2"/></svg>`,
+  wifi: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><path d="M3 9.5a13 13 0 0 1 18 0M6.5 13.5a8 8 0 0 1 11 0M10 17.2a3.5 3.5 0 0 1 4 0"/><circle cx="12" cy="20" r="1.4" fill="${INK}" stroke="none"/></svg>`,
+  power: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.6 7a7.5 7.5 0 1 0 10.8 0"/></svg>`,
+  bt: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10-5 4V3l5 4L7 17"/></svg>`,
+  frame: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><path d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5"/><circle cx="12" cy="9" r="2.2"/><path d="M12 12v4m0 0l-2 4m2-4l2 4m-5.5-6.5L12 12l3.5 1.5" stroke-width="1.8"/></svg>`,
+  earbud: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><path d="M7 4a4 4 0 0 1 4 4v2a3 3 0 0 1-3 3h-.5A2.5 2.5 0 0 1 5 10.5V8a4 4 0 0 1 2-4zM8 13v6"/><path d="M17 4a4 4 0 0 0-4 4v2a3 3 0 0 0 3 3h.5a2.5 2.5 0 0 0 2.5-2.5V8a4 4 0 0 0-2-4zM16 13v6"/></svg>`,
+};
+
+/* ============ 16 页内容 ============ */
+function T(lang){ return (en, zh) => lang === "en" ? en : zh; }
+
+function header(eyebrow, title){
+  return `<div class="eyebrow">${eyebrow || "&nbsp;"}</div><h2>${title}</h2><div class="bar"></div>`;
+}
+function foot(t, n){
+  return `<div class="cfoot"><span>${t("Quick Guide", "快速指南")}</span><span>${String(n).padStart(2, "0")} / 16</span></div>`;
+}
+
+const PAGES = [
+/* 01 封面 */
+(t) => `
+  <div class="cbody" style="justify-content:space-between;align-items:center;text-align:center;padding-top:22px">
+    <p class="cover-title">${t("Quick Guide", "快速指南")}</p>
+    ${atomFront(190)}
+    <div class="wordmark">BODYPARK</div>
+  </div>`,
+
+/* 02 正面 */
+(t) => `
+  ${header(t("GETTING TO KNOW ATOM", "认识 ATOM"), t("Front", "正面"))}
+  <div class="cbody" style="justify-content:center">
+  <svg width="276" viewBox="0 0 276 330" fill="none">
+    <g transform="translate(-18,14) scale(.88)">${atomFrontG()}</g>
+    <g stroke="#b5b5b5" stroke-width="1.5" fill="none">
+      <path d="M96 46l20 -16h52"/>
+      <path d="M100 74h68"/>
+      <path d="M124 132h44"/>
+      <path d="M112 176h56"/>
+      <path d="M164 204h4"/>
+      <path d="M42 248h126"/>
+      <path d="M90 284h78"/>
+    </g>
+    <g class="txt-s" style="font-size:11px">
+      <text x="172" y="34">${t("Privacy Mask", "隐私护罩")}</text>
+      <text x="172" y="78">${t("Ultra-Wide Camera", "超广角镜头")}</text>
+      <text x="172" y="136">${t("Action Button", "功能键")}</text>
+      <text x="172" y="180">${t("OLED Display", "OLED 屏")}</text>
+      <text x="172" y="208">${t("Power Button", "电源键")}</text>
+      <text x="172" y="252">${t("Microphone", "麦克风")}</text>
+      <text x="172" y="288">${t("Speaker", "扬声器")}</text>
+    </g>
+  </svg>
+  </div>`,
+
+/* 03 背面 */
+(t) => `
+  ${header(t("GETTING TO KNOW ATOM", "认识 ATOM"), t("Back", "背面"))}
+  <div class="cbody" style="justify-content:center">
+  <svg width="276" viewBox="0 0 276 330" fill="none">
+    <g transform="translate(-18,14) scale(.88)">${atomRearG()}</g>
+    <g stroke="#b5b5b5" stroke-width="1.5" fill="none">
+      <path d="M130 194h56"/><path d="M96 246h90"/><path d="M100 262h86"/>
+    </g>
+    <g class="txt-s" style="font-size:11px">
+      <text x="191" y="198">${t("MagMount", "磁吸位")}</text>
+      <text x="191" y="250">microSD</text>
+      <text x="191" y="266">USB-C</text>
+    </g>
+  </svg>
+  </div>`,
+
+/* 04 三步总览 */
+(t) => `
+  ${header(t("SETUP", "设置"), t("3 Steps", "三步完成"))}
+  <div class="cbody" style="justify-content:center;gap:26px">
+    ${[
+      [ico.download, t("Download the App", "下载 App")],
+      [ico.pair, t("Pair", "配对")],
+      [ico.wifi, t("Connect to Wi-Fi", "连接 Wi-Fi")],
+    ].map(([icon, label], i) => `
+      <div style="display:flex;align-items:center;gap:14px">
+        <span class="m" style="width:30px;height:30px;border:2px solid var(--ink);border-radius:50%;
+          display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none">${i + 1}</span>
+        ${icon}<span class="m" style="font-weight:700">${label}</span>
+      </div>
+      ${i < 2 ? '<div style="width:2px;height:18px;background:#d7d7d7;margin:-18px 0 -18px 14px"></div>' : ""}`).join("")}
+  </div>`,
+
+/* 05 下载 App */
+(t) => `
+  ${header(t("STEP 1", "第 1 步"), t("Download the App", "下载 App"))}
+  <div class="cbody" style="align-items:center;justify-content:center;gap:16px">
+    <div style="padding:10px;border:1px solid #e2e2e2">${qrSvg(QR_APP, 148)}</div>
+    <div class="s" style="text-decoration:underline">ai.bodypark.fit/app.html</div>
+    <div style="display:flex;gap:8px">
+      <span class="s" style="border:1.5px solid var(--ink);color:var(--ink);padding:4px 10px;font-weight:700">App Store</span>
+      <span class="s" style="border:1.5px solid var(--ink);color:var(--ink);padding:4px 10px;font-weight:700">Google Play</span>
+    </div>
+  </div>`,
+
+/* 06 开机 */
+(t) => `
+  ${header(t("STEP 2.1 · PAIR", "步骤 2.1 · 配对"), t("Power On", "开机"))}
+  <div class="cbody" style="align-items:center;justify-content:center;gap:6px">
+    <div style="position:relative">
+      ${atomFront(196, { power: true })}
+      <div class="m" style="position:absolute;right:-12px;top:198px;background:#fff;border:1.5px solid var(--ink);
+        padding:6px 10px;font-weight:700;white-space:nowrap">${t("Hold 2 s", "长按 2 秒")}</div>
+    </div>
+  </div>`,
+
+/* 07 添加设备 */
+(t) => `
+  ${header(t("STEP 2.2 · PAIR", "步骤 2.2 · 配对"), t("Add Device", "添加设备"))}
+  <div class="cbody" style="align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px;margin-top:2px">
+      ${phone(108, `
+        <circle cx="60" cy="102" r="12" fill="${INK}" stroke="none"/>
+        <circle cx="60" cy="102" r="24" stroke="#c9c9c9" stroke-width="2"/>
+        <circle cx="60" cy="102" r="38" stroke="#e0e0e0" stroke-width="2"/>
+        <rect x="14" y="196" width="92" height="26" rx="5" fill="${FILL}" stroke="none"/>
+        <circle cx="28" cy="209" r="8" fill="#fff" stroke="${INK}" stroke-width="2"/>
+        <text x="42" y="213" class="txt-s" style="font-size:10px">ATOM 4E3Y</text>
+      `)}
+      <div class="m" style="border:1.5px solid var(--ink);padding:8px 10px;max-width:118px;line-height:1.3">
+        ${t("In the app, tap <b>Add Device</b>", "打开 App，点<b>「添加设备」</b>")}</div>
+    </div>
+    <p class="note" style="margin:12px 0 0">${t("Pair in the app — not in your phone's Bluetooth settings.",
+      "在 App 内配对，无需进入手机蓝牙设置。")}</p>
+  </div>`,
+
+/* 08 完成配对 */
+(t) => `
+  ${header(t("STEP 2.3 · PAIR", "步骤 2.3 · 配对"), t("Pair", "完成配对"))}
+  <div class="cbody" style="align-items:center;justify-content:center;gap:18px">
+    <svg width="240" height="70" viewBox="0 0 240 70" fill="none">
+      <g stroke="${INK}" stroke-width="3" fill="#fff"><circle cx="34" cy="42" r="16"/><circle cx="38" cy="20" r="10"/><circle cx="42" cy="19" r="3" fill="${INK}"/></g>
+      <g fill="#9a9a9a"><circle cx="82" cy="34" r="3"/><circle cx="104" cy="34" r="3"/><circle cx="126" cy="34" r="3"/><circle cx="148" cy="34" r="3"/></g>
+      <rect x="182" y="6" width="34" height="60" rx="6" stroke="${INK}" stroke-width="3" fill="none"/>
+    </svg>
+    <div style="width:230px;border:1.5px solid var(--ink);padding:10px 12px;display:flex;align-items:center;justify-content:space-between">
+      <span class="m" style="font-weight:700">ATOM 4E3Y</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 7"/></svg>
+    </div>
+    <p class="m" style="margin:0;text-align:center">${t("Select your ATOM", "选择你的 ATOM")}</p>
+  </div>`,
+
+/* 09 Wi-Fi 手机 */
+(t) => `
+  ${header(t("STEP 3.1 · WI-FI", "步骤 3.1 · WI-FI"), t("Via Phone", "手机选网"))}
+  <div class="cbody" style="align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:flex-start;gap:12px;width:100%;justify-content:center">
+      ${phone(104, `
+        <text x="14" y="36" class="txt-s" style="font-size:9.5px;font-weight:700">${t("Select Wi-Fi", "选择 Wi-Fi")}</text>
+        ${[0, 1, 2, 3].map(i => `
+          <rect x="12" y="${50 + i * 32}" width="96" height="23" rx="4" fill="${i === 0 ? FILL : "none"}" stroke="${i === 0 ? INK : "#dcdcdc"}" stroke-width="1.6"/>
+          <path d="M18 ${61.5 + i * 32}h34" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round"/>
+          <path d="M94 ${63 + i * 32}a6.5 6.5 0 0 1 9 0" stroke="#9a9a9a" stroke-width="2" fill="none"/>
+          <circle cx="98.5" cy="${65.5 + i * 32}" r="1.4" fill="#9a9a9a" stroke="none"/>
+        `).join("")}
+      `)}
+      <div style="display:flex;flex-direction:column;gap:8px;padding-top:6px">
+        <span class="badge">2.4 GHz</span>
+        <div class="m" style="max-width:104px;line-height:1.3">${t("Pick a network in the app", "在 App 里选择网络")}</div>
+      </div>
+    </div>
+    <p class="note" style="margin:12px 0 0">${t("5 GHz and login-page networks are not supported.",
+      "不支持 5 GHz 与需网页认证的网络。")}</p>
+  </div>`,
+
+/* 10 Wi-Fi ATOM 端 */
+(t) => `
+  ${header(t("STEP 3.2 · WI-FI", "步骤 3.2 · WI-FI"), t("On ATOM", "设备端输入"))}
+  <div class="cbody" style="align-items:center;justify-content:center;gap:18px">
+    <svg width="216" height="216" viewBox="0 0 216 216" fill="none">
+      <circle cx="108" cy="108" r="100" stroke="${INK}" stroke-width="3"/>
+      <text x="108" y="74" text-anchor="middle" class="txt-m" style="font-weight:700">${t("Add Wi-Fi", "添加 Wi-Fi")}</text>
+      <rect x="38" y="96" width="140" height="30" rx="15" stroke="${INK}" stroke-width="2.5"/>
+      <text x="56" y="115" class="txt-s" style="font-size:11px">ChinaNext-123</text>
+      <path d="M152 105v-3a5 5 0 0 1 10 0v3m-12 0h14v11h-14z" stroke="${INK}" stroke-width="2" fill="none"/>
+      <rect x="58" y="138" width="100" height="20" rx="10" stroke="#c9c9c9" stroke-width="2"/>
+      <path d="M74 148h68" stroke="#c9c9c9" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <p class="m" style="margin:0;text-align:center;max-width:220px">${t("Enter the password on ATOM", "在 ATOM 上输入 Wi-Fi 密码")}</p>
+  </div>`,
+
+/* 11 热点 */
+(t) => `
+  ${header(t("STEP 3.3 · WI-FI", "步骤 3.3 · WI-FI"), t("Hotspot", "用热点"))}
+  <div class="cbody" style="justify-content:center;gap:22px">
+    <div>
+      <div class="s" style="font-weight:700;letter-spacing:.08em;margin-bottom:8px">iPhone</div>
+      <div style="border:1.5px solid var(--ink);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+        <span class="m">${t("Maximize Compatibility", "最大兼容性")}</span>
+        <span style="width:34px;height:19px;background:var(--ink);border-radius:10px;position:relative;flex:none">
+          <span style="position:absolute;right:2.5px;top:2.5px;width:14px;height:14px;background:#fff;border-radius:50%"></span></span>
+      </div>
+    </div>
+    <div>
+      <div class="s" style="font-weight:700;letter-spacing:.08em;margin-bottom:8px">Android</div>
+      <div style="border:1.5px solid var(--ink);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+        <span class="m">${t("AP band", "热点频段")}</span>
+        <span class="m" style="font-weight:700">2.4 GHz ✓</span>
+      </div>
+    </div>
+    <p class="s" style="margin:0">${t("Turn on your phone's hotspot, then connect ATOM to it.",
+      "开启手机热点，再让 ATOM 连接热点。")}</p>
+  </div>`,
+
+/* 12 摆放规则 */
+(t) => `
+  ${header(t("PLACEMENT", "摆放"), t("Place Your ATOM", "这样摆"))}
+  <div class="cbody" style="justify-content:space-between">
+    <svg width="276" height="180" viewBox="0 0 276 180" fill="none">
+      <path d="M10 158h256" stroke="#cfcfcf" stroke-width="2"/>
+      <polygon points="66,110 208,34 208,156" fill="${FILL}"/>
+      ${atomOnTripod(60, 128)}
+      ${person(208, 30, 126)}
+      <path d="M66 172h136" stroke="${INK}" stroke-width="1.5"/>
+      <path d="M66 166v12M202 166v12" stroke="${INK}" stroke-width="1.5"/>
+      <text x="134" y="169" text-anchor="middle" class="txt-s" style="font-size:10.5px">0.5–1 m</text>
+    </svg>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div class="m" style="display:flex;gap:10px;align-items:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><path d="M12 4v16m0 0l-4-4m4 4l4-4" transform="rotate(180 12 12)"/><path d="M4 20h16"/></svg>
+        ${t("Knee height, or on the floor", "膝盖高度或落地")}</div>
+      <div class="m" style="display:flex;gap:10px;align-items:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18M3 12l4-4m-4 4l4 4M21 12l-4-4m4 4l-4 4"/></svg>
+        ${t("Stand 0.5–1 m away", "距离 0.5–1 米")}</div>
+      <div class="m" style="display:flex;gap:10px;align-items:center">${ico.frame}
+        ${t("Full body in frame, view clear", "全身入框，视野无遮挡")}</div>
+    </div>
+  </div>`,
+
+/* 13 推荐 */
+(t) => `
+  ${header(t("PLACEMENT", "摆放"), t("Do", "推荐"))}
+  <div class="cbody" style="justify-content:center">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${["tripod", "box", "floor", "wall"].map((m, i) => `
+        <div style="border:1px solid #e2e2e2;padding:6px 2px 2px;position:relative">
+          ${i === 0 ? `<span class="badge" style="position:absolute;left:-1px;top:-1px">${t("Recommended", "推荐")}</span>` : ""}
+          ${scene(m)}
+        </div>`).join("")}
+    </div>
+  </div>`,
+
+/* 14 避免 */
+(t) => `
+  ${header(t("PLACEMENT", "摆放"), t("Don't", "避免"))}
+  <div class="cbody" style="justify-content:center;gap:12px">
+    ${["high", "blocked"].map(m => `
+      <div style="border:1px solid #e2e2e2;padding:10px 6px;display:flex;justify-content:center">
+        <div style="transform:scale(1.34);transform-origin:center">${scene(m)}</div>
+      </div>`).join("")}
+  </div>`,
+
+/* 15 耳机 */
+(t) => `
+  ${header("&nbsp;", t("Headphones", "用耳机"))}
+  <div class="cbody" style="align-items:center;justify-content:space-between">
+    <svg width="264" height="150" viewBox="0 0 264 150" fill="none">
+      <g stroke="${INK}" stroke-width="3" fill="#fff"><circle cx="40" cy="96" r="22"/><circle cx="45" cy="66" r="13"/><circle cx="50" cy="64" r="4" fill="${INK}"/></g>
+      <path d="M74 84h30" stroke="#b5b5b5" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round"/>
+      <g transform="translate(75,-3)"><path d="M14 74l16 16M30 74l-16 16" stroke="${INK}" stroke-width="4" stroke-linecap="round"/></g>
+      <g transform="translate(122,72) scale(1.15)" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round">${ico.earbud.replace(/<\/?svg[^>]*>/g, "")}</g>
+      <path d="M158 84h30" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
+      <g transform="translate(163,40) scale(.9)" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${ico.bt.replace(/<\/?svg[^>]*>/g, "")}</g>
+      <rect x="196" y="46" width="42" height="80" rx="8" stroke="${INK}" stroke-width="3" fill="none"/>
+      <path d="M210 54h14" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <p class="m" style="margin:0;text-align:center;max-width:250px">
+      ${t("Pair headphones with your <b>phone</b> to hear rep counts and coaching.",
+          "耳机连<b>手机</b>，即可听到计数与纠错语音。")}</p>
+    <p class="note" style="margin:10px 0 0;width:100%">${t("Headphones can't connect to ATOM directly.", "耳机无法直连 ATOM。")}</p>
+  </div>`,
+
+/* 16 求助 */
+(t) => `
+  ${header("&nbsp;", t("Need Help?", "需要帮助？"))}
+  <div class="cbody" style="justify-content:space-between">
+    <div style="display:flex;flex-direction:column;gap:16px;padding-top:6px">
+      ${[
+        [ico.power, t("<b>Frozen?</b> Hold 10 s to restart", "<b>死机？</b>长按电源键 10 秒重启")],
+        [ico.bt, t("<b>Can't pair?</b> Restart ATOM, Bluetooth on", "<b>配不上？</b>开蓝牙并重启 ATOM")],
+        [ico.wifi, t("<b>Wi-Fi fails?</b> 2.4 GHz only", "<b>连不上网？</b>仅支持 2.4 GHz")],
+        [ico.frame, t("<b>Poor tracking?</b> Full body in frame", "<b>识别不准？</b>确保全身入框")],
+      ].map(([icon, txt]) => `
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="flex:none;width:26px;display:flex;justify-content:center;padding-top:1px">${icon}</span>
+          <span class="m" style="line-height:1.3">${txt}</span>
+        </div>`).join("")}
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;border-top:1px solid #e2e2e2;padding-top:12px">
+      ${qrSvg(QR_SUPPORT, 78)}
+      <div>
+        <div class="m" style="font-weight:700">${t("More help", "更多帮助")}</div>
+        <div class="s" style="text-decoration:underline">bodypark.fit/support</div>
+      </div>
+    </div>
+  </div>`,
+];
+
+/* ============ 渲染 ============ */
+const qs = new URLSearchParams(location.search);
+const EXPORT_PAGE = qs.get("page") ? parseInt(qs.get("page"), 10) : null;
+let LANG = qs.get("lang") === "zh" ? "zh" : (qs.get("lang") === "en" ? "en" : "en");
+
+function cardHtml(i, lang){
+  const t = T(lang), n = i + 1;
+  const inner = PAGES[i](t) + (i === 0 ? "" : foot(t, n));
+  return `<div class="card${i === 0 ? " cover" : ""}" data-p="${n}" onclick="openLb(${i})"
+    role="img" aria-label="Page ${n}">${inner}</div>`;
+}
+
+function render(){
+  const book = document.getElementById("book");
+  const groups = [];
+  const glabel = (s) => `<div class="glabel">${s}</div>`;
+  const wrap = (cards) => `<div class="pair">${cards}</div>`;
+  groups.push(`<div class="group">${glabel("封面 01")}${wrap(`<div class="printbox">${cardHtml(0, LANG)}</div>`)}</div>`);
+  for (let p = 1; p < 15; p += 2){
+    groups.push(`<div class="group">${glabel(`对页 ${String(p + 1).padStart(2, "0")}–${String(p + 2).padStart(2, "0")}`)}
+      ${wrap(`<div class="printbox">${cardHtml(p, LANG)}</div><div class="printbox">${cardHtml(p + 1, LANG)}</div>`)}</div>`);
+  }
+  groups.push(`<div class="group">${glabel("封底 16")}${wrap(`<div class="printbox">${cardHtml(15, LANG)}</div>`)}</div>`);
+  book.innerHTML = groups.join("");
+  document.getElementById("lang-en").setAttribute("aria-pressed", LANG === "en");
+  document.getElementById("lang-zh").setAttribute("aria-pressed", LANG === "zh");
+  if (EXPORT_PAGE){
+    document.body.classList.add("export");
+    document.querySelectorAll(".card").forEach(c => {
+      if (parseInt(c.dataset.p, 10) !== EXPORT_PAGE) c.setAttribute("data-hidden", "1");
+    });
+  }
+}
+function setLang(l){ LANG = l; render(); }
+function openLb(i){
+  if (document.body.classList.contains("export")) return;
+  const h = document.getElementById("lb-holder");
+  h.innerHTML = cardHtml(i, LANG).replace(/onclick="[^"]*"/, "");
+  document.getElementById("lightbox").classList.add("open");
+}
+render();
+</script>
