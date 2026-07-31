@@ -566,41 +566,59 @@ const PAGES = [
     </div>
   </div>`,
 
-/* 14 避免 —— 太近（出框）/ 太远（太小）/ 角度太仰（拍过头顶）*/
+/* 14 避免 —— 圆形 = ATOM 画面里的人物（太近/太远/太仰透视变形）；方框 = 摆放场景（过高俯拍/有遮挡）*/
 (t) => `
   ${header(t.one("PLACEMENT", "摆放"), t("Don't", "避免"))}
-  <div class="cbody" style="justify-content:center;gap:14px">
+  <div class="cbody" style="justify-content:center;gap:13px">
+    <div style="display:flex;gap:8px">
+      <div style="flex:1;text-align:center">
+        <svg width="100%" viewBox="0 0 88 88">
+          <clipPath id="cp14a"><circle cx="42" cy="48" r="36"/></clipPath>
+          <circle cx="42" cy="48" r="36" stroke="${INK}" stroke-width="2.5" fill="none"/>
+          <g clip-path="url(#cp14a)">${personFront(42, 5, 110)}</g>
+          <path d="M72 6l11 11M83 6L72 17" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div class="m" style="margin-top:4px">${t("Too close", "太近")}</div>
+      </div>
+      <div style="flex:1;text-align:center">
+        <svg width="100%" viewBox="0 0 88 88">
+          <clipPath id="cp14b"><circle cx="42" cy="48" r="36"/></clipPath>
+          <circle cx="42" cy="48" r="36" stroke="${INK}" stroke-width="2.5" fill="none"/>
+          <g clip-path="url(#cp14b)">
+            <path d="M14 63h56" stroke="#dedede" stroke-width="2"/>
+            ${personFront(42, 39, 24)}
+          </g>
+          <path d="M72 6l11 11M83 6L72 17" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div class="m" style="margin-top:4px">${t("Too far", "太远")}</div>
+      </div>
+      <div style="flex:1;text-align:center">
+        <svg width="100%" viewBox="0 0 88 88">
+          <clipPath id="cp14c"><circle cx="42" cy="48" r="36"/></clipPath>
+          <circle cx="42" cy="48" r="36" stroke="${INK}" stroke-width="2.5" fill="none"/>
+          <g clip-path="url(#cp14c)" stroke="${INK}" stroke-linecap="round" fill="none">
+            <circle cx="42" cy="19" r="4.5" stroke-width="2.5" fill="#fff"/>
+            <path d="M42 25v14" stroke-width="3"/>
+            <path d="M42 31l-6 5M42 31l6 5" stroke-width="2.5"/>
+            <path d="M42 39L29 81" stroke-width="6"/>
+            <path d="M42 39L55 81" stroke-width="6"/>
+          </g>
+          <path d="M72 6l11 11M83 6L72 17" stroke="${INK}" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div class="m" style="margin-top:4px">${t("Tilted up", "太仰")}</div>
+      </div>
+    </div>
     <div style="display:flex;gap:10px">
       <div style="flex:1;text-align:center">
-        <svg width="100%" viewBox="0 0 128 100" style="border:1.5px solid #cfcfcf;display:block">
-          ${personFront(64, 2, 150)}
-          <path d="M102 8l18 18M120 8l-18 18" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>
-        </svg>
-        <div class="m" style="margin-top:5px">${t("Too close", "太近")}</div>
+        <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("high")}</div>
+        <div class="m" style="margin-top:4px">${t("Too high", "过高俯拍")}</div>
       </div>
       <div style="flex:1;text-align:center">
-        <svg width="100%" viewBox="0 0 128 100" style="border:1.5px solid #cfcfcf;display:block">
-          <path d="M12 71h104" stroke="#dedede" stroke-width="2"/>
-          ${personFront(64, 33, 38)}
-          <path d="M102 8l18 18M120 8l-18 18" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>
-        </svg>
-        <div class="m" style="margin-top:5px">${t("Too far", "太远")}</div>
+        <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("blocked")}</div>
+        <div class="m" style="margin-top:4px">${t("Blocked", "有遮挡")}</div>
       </div>
     </div>
-    <div style="text-align:center">
-      <svg width="100%" viewBox="0 0 266 96" style="border:1.5px solid #cfcfcf;display:block">
-        <path d="M8 88h250" stroke="#cfcfcf" stroke-width="2"/>
-        <polygon points="40,62 150,0 235,0" fill="${FILL}"/>
-        <g stroke="${INK}" stroke-width="3" fill="#fff">
-          <circle cx="30" cy="78" r="10"/>
-          <circle cx="37" cy="64" r="6.5"/>
-          <circle cx="40" cy="60" r="2.2" fill="${INK}"/>
-        </g>
-        ${person(210, 14, 74)}
-        <path d="M236 8l18 18M254 8l-18 18" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>
-      </svg>
-      <div class="m" style="margin-top:5px">${t("Tilted too far up", "角度太仰")}</div>
-    </div>
+    <p class="s" style="margin:0;text-align:center">${t("○ ATOM's view · □ placement", "○ ATOM 画面 · □ 摆放位置")}</p>
   </div>`,
 
 /* 15 耳机 */
