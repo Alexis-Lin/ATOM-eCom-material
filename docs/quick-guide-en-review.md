@@ -29,7 +29,7 @@
 | P05 | **Long press ⏻ for 2s** | **Press and hold for 2 s** / **Hold for 2 s** | "long press" 是触屏手势用语，物理按键用 press and hold |
 | P06 | Create Account and pair your ATOM **with the App** | **Create an account, then pair your ATOM in the app** | in the app 更地道，且与下方 Don't 句式呼应 |
 | P08 | **Connect ATOM to WiFi with phone** / **Choose WiFi in your App** | **3.1 Connect via Your Phone** / **Pick a network in the app** | 现标题像逐字翻译；"your App" 大小写也不对 |
-| P13 | **Too Close to Edge** / **Too Low Angle** | **Off-Center** / **Too Low** | 标签要短平行：Too Close / Too Far / Off-Center / Too Low / Too High / Blocked——六个全 ≤2 词，Low/High 还成对 |
+| P13 | **Too Close to Edge** / **Too Low Angle** | **Off-Center** / **Too Low** | 标签要短平行：Too Close / Too Far / Off-Center / Too Low / Too High / Blocked——六个全 ≤2 词，Low/High 还成对。**太仰=Too Low 已同步进排版稿（2026-08-03）**；备选术语 Low Angle（摄影仰拍标准词，偏行业） |
 | P15 | **Train Immersively on Your TV?** | **Train on the Big Screen?** / **Train Big on Your TV?** | "immersively" 副词形式书面且拗口，母语文案几乎不用 |
 
 - 另：P13 **Obstructed** 无错，但 **Blocked** 更口语（保持与建议标签组一致）；P12 band 里 **Either is fine. Please follow the instructions** 太空泛且 "Please" 多余 → **Either works — follow the exercise cues**。P12 标题 **Recommended** 与格内徽章 Recommended 重复 → 标题可改 **Good Spots** 或 **Do**。
