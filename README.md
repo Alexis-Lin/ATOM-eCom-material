@@ -20,10 +20,9 @@ assets/
     2-membership-simple-global.png Membership · simple
     3-membership-detail-global.png Membership · detailed
   guide/                           开箱快速指南（16 面小手册，单面 54 × 85.6 mm）
-    cn/ 01–16-cn.png               中文逐页（1500 × 2380 px，默认版）
+    cn/ 01–16-cn.png               中文逐页（1500 × 2380 px）
     en/ 01–16-en.png               英文逐页
-    bi/ 01–16-bi.png               EN+中文双语混排（全球单版印刷方案）
-    quick-guide-print-{cn,en,bi}.pdf  印刷 PDF（54 × 85.6 mm × 16 页，矢量）
+    quick-guide-print-{cn,en}.pdf  印刷 PDF（54 × 85.6 mm × 16 页，矢量）
 ```
 
 **规格**：宽 **1272 / 1296 px**（424 / 432pt @3x），PNG，白底、**无边框、全直角**，高度随内容。可直接在手机查看或嵌入详情页。
