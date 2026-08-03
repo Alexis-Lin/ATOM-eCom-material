@@ -2,7 +2,7 @@
 
 > 对照对象：设计师英文版 PDF（16 页）· 2026-08-03
 > 🔴 必改（语法/准确性错误）· 🟡 建议（更 native / 更简洁 / 一致性）· ✅ 已确认无需改
-> 已并入全部定稿口径：配对章节名、Audio Output、Too Low、3.1 标题「or」后缀。
+> 已并入全部定稿口径：配对章节名、Audio Output、Too Low、3.1 标题「or」后缀、pairing mode 确认存在。
 
 ## 一、逐页替换
 
@@ -21,7 +21,7 @@
 | P05 | Make sure ATOM is charged before first use. If ATOM is unresponsive, hold the power button for 10s to force restart | Charge ATOM before first use.（10 s 重启与 P16 重复，删） | 🟡 |
 | P06 | 眉题 Pair Your Account | Pair Your Account with ATOM（**定稿**） | 🔴 |
 | P06 | Create Account and pair your ATOM with the App | Create an account, then pair your ATOM in the app | 🟡 |
-| P06 | Make sure ATOM is powered on and in pairing mode | Make sure ATOM is powered on and nearby（**待产品确认**是否存在 pairing mode；若无必须删） | 🔴 |
+| P06 | Make sure ATOM is powered on and in pairing mode | ✅ **已确认 pairing mode 存在，原文准确，无需改** | ✅ |
 | P07 | 眉题 Pair Your Account | Pair Your Account with ATOM（**定稿**） | 🔴 |
 | P07 | 2.3 Complete Pairing | 2.3 Finish Pairing | 🟡 |
 | P07 | ATOM 1234 | ATOM 4E3Y（1234 像 PIN 码/占位符） | 🟡 |
@@ -70,6 +70,6 @@
 3. **太仰 = Too Low**（与 Too High 成对；备选术语 Low Angle 偏行业，弃用）。
 4. **3.1 标题带「, or …」灰色后缀**——与对页 3.2 构成二选一；3.3 热点为兜底方案，不参与该连接。
 
-## 四、待产品确认（改稿前必须闭环）
+## 四、待确认事项
 
-1. **P06 "pairing mode"** 是否真实存在？若无（开机即被 App 自动发现），必须删掉该说法，否则会产生"怎么进 pairing mode"的客服工单。
+（无——pairing mode 已于 2026-08-03 确认存在，全部疑点闭环。）
