@@ -7,7 +7,7 @@
 
 | 页 | 现文 | 问题 | 建议 |
 |---|---|---|---|
-| P03/05/06/07 | 章节名 **Pair Your Account** | 英文里配对的对象是设备不是账号，"pair an account" 不成立，母语者会愣一下 | 章节名改回 **Pair Your ATOM**；建账号动作在 P06 正文里已经有（Create an account…） |
+| P03/05/06/07 | 章节名 **Pair Your Account** | 英文里配对的对象是设备不是账号，"pair an account" 不成立，母语者会愣一下 | **已定稿（2026-08-03）：Pair Your Account with ATOM**（体现账号与设备绑定的产品语义） |
 | P06 | Make sure ATOM is powered on **and in pairing mode** | 产品是否真有"pairing mode"？此前口径是"开机后 App 自动发现"。如果没有这个模式，这句话会制造客服问题（"怎么进 pairing mode？"） | 若无此模式：**Make sure ATOM is powered on and nearby** |
 | P02 | **Privacy Mask** 标在 Back 组 | 隐私护罩主体在正面镜头上；归到背面组读者会找错位置（若设计意图是从背面标注护罩带，需要确认） | 移回 Front 组，或与产品确认标注位 |
 
@@ -63,16 +63,16 @@
 | P02 | Privacy Mask（标在 Back 组） | 移回 Front 组（或与产品确认标注位） | 🔴 |
 | P03 | Only 3 Steps | 3 Easy Steps | 🟡 |
 | P03 | 1 Download App | 1 Download the App | 🔴 |
-| P03 | 2 Pair Your Account | 2 Pair Your ATOM | 🔴 |
+| P03 | 2 Pair Your Account | 2 Pair Your Account with ATOM（定稿） | 🔴 |
 | P03 | 3 Connect to WiFi | 3 Connect to Wi-Fi | 🟡 |
 | P04 | 1 Download App | 1 Download the App | 🔴 |
-| P05 | 眉题 Pair Your Account | Pair Your ATOM | 🔴 |
+| P05 | 眉题 Pair Your Account | Pair Your Account with ATOM（定稿） | 🔴 |
 | P05 | Long press ⏻ for 2s | Press and hold ⏻ for 2 s | 🔴 |
 | P05 | Make sure ATOM is charged before first use. If ATOM is unresponsive, hold the power button for 10s to force restart | Charge ATOM before first use.（10 s 重启已在 P16，删避免重复） | 🟡 |
-| P06 | 眉题 Pair Your Account | Pair Your ATOM | 🔴 |
+| P06 | 眉题 Pair Your Account | Pair Your Account with ATOM（定稿） | 🔴 |
 | P06 | Create Account and pair your ATOM with the App | Create an account, then pair your ATOM in the app | 🟡 |
 | P06 | Make sure ATOM is powered on and in pairing mode | Make sure ATOM is powered on and nearby（若产品无 pairing mode 概念） | 🔴 |
-| P07 | 眉题 Pair Your Account | Pair Your ATOM | 🔴 |
+| P07 | 眉题 Pair Your Account | Pair Your Account with ATOM（定稿） | 🔴 |
 | P07 | 2.3 Complete Pairing | 2.3 Finish Pairing | 🟡 |
 | P07 | ATOM 1234 | ATOM 4E3Y（1234 像 PIN 码/占位符） | 🟡 |
 | P08 | Connect ATOM to WiFi with phone | 3.1 Connect via Your Phone | 🔴 |
@@ -90,7 +90,7 @@
 | P13 | Too Close to Edge | Off-Center | 🔴 |
 | P13 | Too Low Angle | Too Low（与 Too High 成对；语法上 too low angle 不成立） | 🔴 |
 | P13 | Obstructed | Blocked | 🟡 |
-| P14 | Set Audio Output to Phone in the app | 与 App 实际英文串对齐（Audio Output vs Sound Output，以 App 为准） | 🔴 |
+| P14 | Set Audio Output to Phone in the app | **已确认：App 串即 Audio Output，PDF 无需改**（我方排版稿已由 Sound Output 对齐为 Audio Output） | ✅ |
 | P14 | ATOM and the app can play audio independently. We recommend using only one at a time | ATOM and the app can each play audio — best to keep just one on. | 🟡 |
 | P15 | Train Immersively on Your TV? | Train on the Big Screen? | 🔴 |
 | P15 | ATOM doesn't connect directly to the TV | ATOM can't connect directly to the TV（与 P14 句式统一） | 🟡 |
