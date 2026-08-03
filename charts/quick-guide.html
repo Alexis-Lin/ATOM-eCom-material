@@ -570,6 +570,9 @@ const PAGES = [
 (t) => `
   ${header(t.one("PLACEMENT", "摆放"), t("Don't", "避免"))}
   <div class="cbody" style="justify-content:space-between">
+    <div class="s" style="font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:-2px">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#141414" stroke-width="1.8"/><circle cx="7" cy="7" r="1.8" fill="#141414"/></svg>
+      ${t.one("WHAT ATOM SEES", "ATOM 镜头画面")}</div>
     <div style="display:flex;gap:5px">
       ${[
         ["cpA", t("Too close", "太近"), personFront(30, 2, 84)],
@@ -589,22 +592,24 @@ const PAGES = [
           <g clip-path="url(#${id})">${inner}</g>
           <path d="M53 4l8 8M61 4l-8 8" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
-        <div class="m" style="margin-top:2px">${label}</div>
+        <div class="m" style="margin-top:0">${label}</div>
       </div>`).join("")}
     </div>
+    <div class="s" style="font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:-2px">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="11" height="11" stroke="#141414" stroke-width="1.8"/></svg>
+      ${t.one("HOW IT'S PLACED", "摆放示意")}</div>
     <div style="display:flex;gap:10px;align-items:flex-start">
       <div style="flex:1;text-align:center">
-        <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("high", 114)}</div>
-        <div class="m" style="margin-top:3px">${t("Too high", "过高俯拍")}</div>
+        <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("high", 102)}</div>
+        <div class="m" style="margin-top:1px">${t("Too high", "过高俯拍")}</div>
       </div>
       <div style="flex:1;text-align:center">
-        <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("blocked", 114)}</div>
-        <div class="m" style="margin-top:3px">${t("Blocked", "有遮挡")}</div>
+        <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("blocked", 102)}</div>
+        <div class="m" style="margin-top:1px">${t("Blocked", "有遮挡")}</div>
       </div>
     </div>
-    <p class="s" style="margin:0;text-align:center">${t.one("○ ATOM's view · □ placement", "○ ATOM 画面 · □ 摆放位置")}</p>
-    <div style="border:1.5px solid var(--ink);padding:8px 10px;display:flex;align-items:center;gap:10px">
-      <svg width="84" height="58" viewBox="0 0 84 58" fill="none">
+    <div style="border:1.5px solid var(--ink);padding:6px 10px;display:flex;align-items:center;gap:10px">
+      <svg width="74" height="50" viewBox="0 0 84 58" fill="none">
         <rect x="24" y="13" width="36" height="14" rx="7" fill="${FILL}" stroke="${INK}" stroke-width="2"/>
         <circle cx="42" cy="20" r="5.5" fill="${INK}"/>
         <path d="M42 32v8" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="2 3"/>
