@@ -631,7 +631,7 @@ const PAGES = [
 
 /* 15 耳机 —— ✓/✗ 双面板（与 P07 同构）：手机连耳机 ✓ / ATOM 连耳机 ✗ */
 (t) => `
-  ${header("&nbsp;", t("Headphones", "用耳机"))}
+  ${header(t.one("PREFER IT QUIET?", "想安静地练？"), t("Headphones", "用耳机"))}
   <div class="cbody" style="justify-content:center;gap:14px">
     <div style="border:1.5px solid var(--ink);padding:12px 14px;display:flex;align-items:center;gap:12px">
       <svg width="150" height="56" viewBox="0 0 150 56" fill="none">
@@ -654,9 +654,16 @@ const PAGES = [
       <span style="flex:1"></span>
       <svg width="30" height="30" viewBox="0 0 24 24" stroke="${INK}" stroke-width="4" stroke-linecap="round"><path d="M4 4l16 16M20 4L4 20"/></svg>
     </div>
-    <p class="m" style="margin:6px 0 0;text-align:center">
-      ${t("Pair headphones with your <b>phone</b> — audio stays in sync. Just mute ATOM.",
-          "耳机连<b>手机</b>，声音自动同步；想安静时把 ATOM 静音即可。")}</p>
+    <div style="border:1.5px solid var(--ink);padding:10px 12px;display:flex;align-items:center;gap:12px">
+      <svg width="64" height="30" viewBox="0 0 64 30" fill="none" stroke="${INK}" stroke-linecap="round">
+        <path d="M4 12h4l6-5v16l-6-5H4z" stroke-width="2" fill="#fff"/>
+        <path d="M18 10l6 10M24 10l-6 10" stroke-width="2"/>
+        <path d="M32 15h8m0 0l-3.5-3.5M40 15l-3.5 3.5" stroke-width="2"/>
+        <rect x="46" y="3" width="15" height="24" rx="3.5" stroke-width="2.2"/>
+      </svg>
+      <div class="m" style="flex:1">${t("In the app, set <b>Sound Output</b> to <b>Phone</b>",
+        "在 App「<b>声音输出</b>」里选<b>手机</b>")}</div>
+    </div>
   </div>`,
 
 /* 16 求助 */
