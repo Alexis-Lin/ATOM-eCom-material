@@ -456,7 +456,7 @@ const PAGES = [
 
 /* 09 Wi-Fi 手机 */
 (t) => `
-  ${header(t.one("WI-FI", "连网"), t("Via Phone", "手机选网"), "3.1")}
+  ${header(t.one("WI-FI", "连网"), t('Via Phone<span style="color:var(--mut)">, or …</span>', '手机选网<span style="color:var(--mut)">，或…</span>'), "3.1")}
   <div class="cbody" style="align-items:center;justify-content:space-between">
     <div style="display:flex;align-items:flex-start;gap:12px;width:100%;justify-content:center">
       ${phone(104, `
@@ -475,7 +475,6 @@ const PAGES = [
     </div>
     <p class="note" style="margin:12px 0 0">${t("5 GHz and login-page networks are not supported.",
       "不支持 5 GHz 与需网页认证的网络。")}</p>
-    <div class="m" style="text-align:right;color:var(--mut);font-weight:700;margin-top:4px">${t("… or", "… 或")} →</div>
   </div>`,
 
 /* 10 Wi-Fi ATOM 端 */
