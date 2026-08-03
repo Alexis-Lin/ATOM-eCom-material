@@ -744,15 +744,18 @@ const PAGES = [
 (t) => `
   ${header("&nbsp;", t("Need Help?", "需要帮助？"))}
   <div class="cbody" style="justify-content:space-between">
-    <div style="display:flex;flex-direction:column;gap:16px;padding-top:6px">
+    <div style="display:flex;flex-direction:column;gap:12px;padding-top:2px">
       ${[
+        [`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+           <path d="M20 12a8 8 0 1 1-2.3-5.6M18 3v4h-4"/></svg>`,
+         t("<b>Update often</b> — ATOM & app ship new versions", "<b>记得升级</b> ATOM 与 App 常有新版本")],
         [ico.power, t("<b>Frozen?</b> Hold 10 s to restart", "<b>死机？</b>长按电源键 10 秒重启")],
         [ico.bt, t("<b>Can't pair?</b> Restart ATOM, Bluetooth on", "<b>配不上？</b>开蓝牙并重启 ATOM")],
         [ico.wifi, t("<b>Wi-Fi fails?</b> 2.4 GHz only", "<b>连不上网？</b>仅支持 2.4 GHz")],
         [ico.frame, t("<b>Poor tracking?</b> Full body in frame", "<b>识别不准？</b>确保全身入框")],
         [`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-           <path d="M20 12a8 8 0 1 1-2.3-5.6M18 3v4h-4"/></svg>`,
-         t("<b>Update often</b> — ATOM & app ship new versions", "<b>记得升级</b> ATOM 与 App 常有新版本")],
+           <path d="M19 8.5H8.5a5 5 0 0 0 0 10H10"/><path d="M15.5 5l4 3.5-4 3.5"/><circle cx="16" cy="18" r="0.8" fill="${INK}"/></svg>`,
+         t("<b>Found a bug?</b> Use in-app Report — it helps us improve", "<b>多用「报错」反馈问题</b>，让产品更好")],
       ].map(([icon, txt]) => `
         <div style="display:flex;gap:10px;align-items:flex-start">
           <span style="flex:none;width:26px;display:flex;justify-content:center;padding-top:1px">${icon}</span>
@@ -770,10 +773,12 @@ const PAGES = [
       <div style="min-width:0">
         <div class="m" style="font-weight:700">${t("Scan for FAQs", "添加企业微信")}</div>
         <div class="m">${t.one("&nbsp;", "快速客服")}</div>
-        <div class="s" style="margin-top:5px">www.bodypark.fit</div>
-        <div class="s">cs@bodypark.fit</div>
+        <div class="m" style="font-weight:700;margin-top:6px;display:flex;align-items:center;gap:6px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg>
+          <span style="white-space:nowrap">cs@bodypark.fit</span></div>
       </div>
     </div>
+    <p class="s" style="margin:6px 0 0;text-align:center">www.bodypark.fit</p>
   </div>`,
 ];
 
