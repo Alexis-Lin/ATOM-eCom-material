@@ -308,48 +308,50 @@ const PAGES = [
     <div class="wordmark">BODYPARK</div>
   </div>`,
 
-/* 02 正面 */
+/* 02 认识 ATOM（正面 + 背面合并一页）*/
 (t) => `
-  ${header(t.one("GETTING TO KNOW ATOM", "认识 ATOM"), t("Front", "正面"))}
-  <div class="cbody" style="justify-content:center">
-  <svg width="276" viewBox="0 0 276 330" fill="none">
-    <g transform="translate(-18,14) scale(.88)">${atomFrontG()}</g>
-    <g stroke="#b5b5b5" stroke-width="1.5" fill="none">
-      <path d="M96 46l20 -16h52"/>
-      <path d="M100 74h68"/>
-      <path d="M124 132h44"/>
-      <path d="M112 176h56"/>
-      <path d="M164 204h4"/>
-      <path d="M42 248h126"/>
-      <path d="M90 284h78"/>
-    </g>
-    <g class="txt-s" style="font-size:11px">
-      ${svl(t, 172, 34, "Privacy Mask", "隐私护罩")}
-      ${svl(t, 172, 78, "Ultra-Wide Camera", "超广角镜头")}
-      ${svl(t, 172, 136, "Action Button", "功能键")}
-      ${svl(t, 172, 180, "OLED Display", "OLED 屏")}
-      ${svl(t, 172, 208, "Power Button", "电源键")}
-      ${svl(t, 172, 252, "Microphone", "麦克风")}
-      ${svl(t, 172, 288, "Speaker", "扬声器")}
-    </g>
-  </svg>
-  </div>`,
-
-/* 03 背面 */
-(t) => `
-  ${header(t.one("GETTING TO KNOW ATOM", "认识 ATOM"), t("Back", "背面"))}
-  <div class="cbody" style="justify-content:center">
-  <svg width="276" viewBox="0 0 276 330" fill="none">
-    <g transform="translate(-18,14) scale(.88)">${atomRearG()}</g>
-    <g stroke="#b5b5b5" stroke-width="1.5" fill="none">
-      <path d="M130 194h56"/><path d="M96 246h90"/><path d="M100 262h86"/>
-    </g>
-    <g class="txt-s" style="font-size:11px">
-      ${svl(t, 191, 198, "MagMount", "磁吸位")}
-      <text x="191" y="250">microSD</text>
-      <text x="191" y="266">USB-C</text>
-    </g>
-  </svg>
+  ${header(t.one("GETTING TO KNOW ATOM", "认识 ATOM"), t("Front & Back", "正面与背面"))}
+  <div class="cbody" style="justify-content:space-between">
+    <div>
+      <div class="s" style="font-weight:700;letter-spacing:.08em;margin-bottom:2px">${t.one("FRONT", "正面")}</div>
+      <svg width="276" height="188" viewBox="0 0 276 192" fill="none">
+        <g transform="translate(-10,6) scale(.58)">${atomFrontG()}</g>
+        <g stroke="#b5b5b5" stroke-width="1.2" fill="none">
+          <path d="M60 30l14 -8h76"/>
+          <path d="M70 50h80"/>
+          <path d="M86 84h64"/>
+          <path d="M76 114h74"/>
+          <path d="M110 132h40"/>
+          <path d="M32 160h118"/>
+          <path d="M78 182h72"/>
+        </g>
+        <g class="txt-s" style="font-size:11px">
+          ${svl(t, 154, 26, "Privacy Mask", "隐私护罩")}
+          ${svl(t, 154, 54, "Ultra-Wide Camera", "超广角镜头")}
+          ${svl(t, 154, 88, "Action Button", "功能键")}
+          ${svl(t, 154, 118, "OLED Display", "OLED 屏")}
+          ${svl(t, 154, 136, "Power Button", "电源键")}
+          ${svl(t, 154, 164, "Microphone", "麦克风")}
+          ${svl(t, 154, 186, "Speaker", "扬声器")}
+        </g>
+      </svg>
+    </div>
+    <div>
+      <div class="s" style="font-weight:700;letter-spacing:.08em;margin-bottom:2px">${t.one("BACK", "背面")}</div>
+      <svg width="276" height="150" viewBox="0 0 276 154" fill="none">
+        <g transform="translate(-12,0) scale(.48)">${atomRearG()}</g>
+        <g stroke="#b5b5b5" stroke-width="1.2" fill="none">
+          <path d="M72 98h78"/>
+          <path d="M56 127h94"/>
+          <path d="M56 133l8 9h86"/>
+        </g>
+        <g class="txt-s" style="font-size:11px">
+          ${svl(t, 154, 102, "MagMount", "磁吸位")}
+          <text x="154" y="131">microSD</text>
+          <text x="154" y="146">USB-C</text>
+        </g>
+      </svg>
+    </div>
   </div>`,
 
 /* 04 三步总览 */
@@ -626,6 +628,57 @@ const PAGES = [
         <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("blocked", 102)}</div>
         <div class="m" style="margin-top:1px">${t("Blocked", "有遮挡")}</div>
       </div>
+    </div>
+  </div>`,
+
+/* 14 投屏电视 —— 与耳机页同构：手机系统投屏，非 ATOM 直连电视 */
+(t) => `
+  ${header(t.one("CAST TO TV", "投屏电视"), t("Train Big on Your TV?", "想在电视上沉浸训练？"))}
+  <div class="cbody" style="justify-content:center;gap:8px">
+    <div class="s" style="font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:6px">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 13l5.5 5.5L20.5 6"/></svg>
+      ${t.one("DO THIS", "这样做")}</div>
+    <div style="border:1.5px solid var(--ink);padding:4px 12px;display:flex;align-items:center;gap:12px">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 0 8px">
+          <span class="stepn" style="margin-right:0;flex:none">1</span>
+          <svg width="78" height="34" viewBox="0 0 88 38" fill="none" stroke="${INK}" stroke-linecap="round">
+            <rect x="2" y="10" width="14" height="26" rx="3" stroke-width="2.2"/>
+            <path d="M38 8a13 13 0 0 1 16 0M42 14a8 8 0 0 1 8 0" stroke-width="1.8"/>
+            <circle cx="46" cy="19" r="1.4" fill="${INK}" stroke="none"/>
+            <rect x="58" y="12" width="28" height="18" rx="2.5" stroke-width="2.2"/>
+            <path d="M66 35h12M72 30v5" stroke-width="2"/>
+          </svg>
+          <div class="m" style="flex:1">${t("Phone and TV on the same Wi-Fi", "手机和电视连同一 Wi-Fi")}</div>
+        </div>
+        <div style="border-top:1px solid #e2e2e2;display:flex;align-items:center;gap:10px;padding:9px 0 8px">
+          <span class="stepn" style="margin-right:0;flex:none">2</span>
+          <svg width="78" height="34" viewBox="0 0 88 38" fill="none" stroke="${INK}" stroke-linecap="round">
+            <rect x="2" y="6" width="14" height="26" rx="3" stroke-width="2.2"/>
+            <path d="M20 24a7 7 0 0 1 7 7M20 17a14 14 0 0 1 14 14" stroke-width="1.8"/>
+            <path d="M40 19h10m0 0l-4-4M50 19l-4 4" stroke-width="2"/>
+            <rect x="58" y="8" width="28" height="18" rx="2.5" stroke-width="2.2"/>
+            <path d="M66 31h12M72 26v5" stroke-width="2"/>
+          </svg>
+          <div class="m" style="flex:1">${t("Cast with your phone's <b>Screen Mirroring</b>",
+            "用手机自带<b style=\"white-space:nowrap\">投屏 / 屏幕镜像</b>投出 App")}</div>
+        </div>
+      </div>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M3.5 13l5.5 5.5L20.5 6"/></svg>
+    </div>
+    <div class="s" style="font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-top:8px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L22 20.5H2z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r="0.6" fill="#141414"/></svg>
+      ${t.one("NOTE", "注意")}</div>
+    <div style="border:1.5px solid var(--ink);padding:11px 12px;display:flex;align-items:center;gap:10px;background:${FILL}">
+      <svg width="80" height="40" viewBox="0 0 84 42" fill="none" stroke="${INK}" stroke-linecap="round">
+        <g stroke-width="2.2" fill="#fff"><circle cx="13" cy="28" r="10"/><circle cx="16" cy="13" r="6.5"/><circle cx="18.2" cy="12" r="2" fill="${INK}"/></g>
+        <path d="M30 24h20" stroke="#9a9a9a" stroke-width="2.5" stroke-dasharray="2 5"/>
+        <rect x="54" y="10" width="28" height="19" rx="2.5" stroke-width="2.2"/>
+        <path d="M62 34h12M68 29v5" stroke-width="2"/>
+      </svg>
+      <div class="m" style="flex:1">${t("Casting comes from your phone — ATOM doesn't connect to the TV",
+        "投屏由<b>手机</b>完成，ATOM 不直连<span style=\"white-space:nowrap\">电视</span>")}</div>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3L22.5 20.5H1.5z"/><path d="M12 9.5v5"/><circle cx="12" cy="17.5" r="0.7" fill="${INK}"/></svg>
     </div>
   </div>`,
 
