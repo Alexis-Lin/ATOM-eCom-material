@@ -556,7 +556,7 @@ const PAGES = [
 /* 13 推荐 */
 (t) => `
   ${header(t.one("PLACEMENT", "摆放"), t("Do", "推荐"))}
-  <div class="cbody" style="justify-content:center">
+  <div class="cbody" style="justify-content:center;gap:14px">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       ${["tripod", "box", "floor", "wall"].map((m, i) => `
         <div style="border:1px solid #e2e2e2;padding:6px 2px 2px;position:relative">
@@ -564,12 +564,24 @@ const PAGES = [
           ${scene(m)}
         </div>`).join("")}
     </div>
+    <div style="border:1.5px solid var(--ink);padding:6px 10px;display:flex;align-items:center;gap:10px">
+      <svg width="74" height="50" viewBox="0 0 84 58" fill="none">
+        <rect x="24" y="13" width="36" height="14" rx="7" fill="${FILL}" stroke="${INK}" stroke-width="2"/>
+        <circle cx="42" cy="20" r="5.5" fill="${INK}"/>
+        <path d="M42 32v8" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="2 3"/>
+        <g stroke="${INK}" stroke-width="2.2" fill="#fff"><circle cx="42" cy="48" r="6"/><circle cx="42" cy="48" r="1.8" fill="${INK}" stroke="none"/></g>
+        <path d="M62 20h6" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="2 3"/>
+        <g stroke="${INK}" stroke-width="2.2" fill="#fff"><circle cx="75" cy="20" r="6"/><circle cx="75" cy="20" r="1.8" fill="${INK}" stroke="none"/></g>
+      </svg>
+      <div class="m" style="flex:1">${t("<b>Front or side</b> — follow the exercise", "按动作指示，<b>正面或侧面</b>摆放")}</div>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 13l5.5 5.5L20.5 6"/></svg>
+    </div>
   </div>`,
 
 /* 14 避免 —— 圆 = ATOM 画面（太近/太远/太边缘/太仰畸变）；方 = 摆放（过高俯拍/有遮挡）；底部 ✓ 正面或侧面 */
 (t) => `
   ${header(t.one("PLACEMENT", "摆放"), t("Don't", "避免"))}
-  <div class="cbody" style="justify-content:space-between">
+  <div class="cbody" style="justify-content:center;gap:18px">
     <div class="s" style="font-weight:700;letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:-2px">
       <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#141414" stroke-width="1.8"/><circle cx="7" cy="7" r="1.8" fill="#141414"/></svg>
       ${t.one("WHAT ATOM SEES", "ATOM 镜头画面")}</div>
@@ -607,18 +619,6 @@ const PAGES = [
         <div style="border:1.5px solid #cfcfcf;padding:2px 0;display:flex;justify-content:center">${scene("blocked", 102)}</div>
         <div class="m" style="margin-top:1px">${t("Blocked", "有遮挡")}</div>
       </div>
-    </div>
-    <div style="border:1.5px solid var(--ink);padding:6px 10px;display:flex;align-items:center;gap:10px">
-      <svg width="74" height="50" viewBox="0 0 84 58" fill="none">
-        <rect x="24" y="13" width="36" height="14" rx="7" fill="${FILL}" stroke="${INK}" stroke-width="2"/>
-        <circle cx="42" cy="20" r="5.5" fill="${INK}"/>
-        <path d="M42 32v8" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="2 3"/>
-        <g stroke="${INK}" stroke-width="2.2" fill="#fff"><circle cx="42" cy="48" r="6"/><circle cx="42" cy="48" r="1.8" fill="${INK}" stroke="none"/></g>
-        <path d="M62 20h6" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="2 3"/>
-        <g stroke="${INK}" stroke-width="2.2" fill="#fff"><circle cx="75" cy="20" r="6"/><circle cx="75" cy="20" r="1.8" fill="${INK}" stroke="none"/></g>
-      </svg>
-      <div class="m" style="flex:1">${t("<b>Front or side</b> — follow the exercise", "按动作指示，<b>正面或侧面</b>摆放")}</div>
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 13l5.5 5.5L20.5 6"/></svg>
     </div>
   </div>`,
 
