@@ -629,28 +629,34 @@ const PAGES = [
     </div>
   </div>`,
 
-/* 15 耳机 */
+/* 15 耳机 —— ✓/✗ 双面板（与 P07 同构）：手机连耳机 ✓ / ATOM 连耳机 ✗ */
 (t) => `
   ${header("&nbsp;", t("Headphones", "用耳机"))}
-  <div class="cbody" style="align-items:center;justify-content:space-between">
-    <svg width="264" height="150" viewBox="0 0 264 150" fill="none">
-      <g stroke="${INK}" stroke-width="3" fill="#fff"><circle cx="40" cy="96" r="22"/><circle cx="45" cy="66" r="13"/><circle cx="50" cy="64" r="4" fill="${INK}"/></g>
-      <path d="M74 84h30" stroke="#b5b5b5" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round"/>
-      <g transform="translate(75,-3)"><path d="M14 74l16 16M30 74l-16 16" stroke="${INK}" stroke-width="4" stroke-linecap="round"/></g>
-      <g transform="translate(122,72) scale(1.15)" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round">${ico.earbud.replace(/<\/?svg[^>]*>/g, "")}</g>
-      <path d="M158 84h30" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
-      <g transform="translate(163,40) scale(.9)" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${ico.bt.replace(/<\/?svg[^>]*>/g, "")}</g>
-      <rect x="196" y="46" width="42" height="80" rx="8" stroke="${INK}" stroke-width="3" fill="none"/>
-      <path d="M210 54h14" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
-      <g stroke="${INK}" stroke-width="2" fill="none">
-        <path d="M28 128h6l7 -6v18l-7 -6h-6z" fill="#fff"/>
-        <path d="M46 128l8 8M54 128l-8 8"/>
-      </g>
-    </svg>
-    <p class="m" style="margin:0;text-align:center;max-width:256px">
+  <div class="cbody" style="justify-content:center;gap:14px">
+    <div style="border:1.5px solid var(--ink);padding:12px 14px;display:flex;align-items:center;gap:12px">
+      <svg width="150" height="56" viewBox="0 0 150 56" fill="none">
+        <rect x="4" y="5" width="30" height="46" rx="6" stroke="${INK}" stroke-width="2.5"/>
+        <path d="M13 11h12" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
+        <path d="M44 32h52" stroke="#9a9a9a" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round"/>
+        <path d="M66 22l8 8-4 3.2V17.2l4 3.2-8 8" stroke="${INK}" stroke-width="1.8" fill="none" stroke-linejoin="round" transform="translate(0,-14) scale(.9)"/>
+        <g transform="translate(102,16) scale(1.1)" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round">${ico.earbud.replace(/<\/?svg[^>]*>/g, "")}</g>
+      </svg>
+      <span style="flex:1"></span>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${INK}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 13l5.5 5.5L20.5 6"/></svg>
+    </div>
+    <div style="border:1.5px solid var(--ink);padding:12px 14px;display:flex;align-items:center;gap:12px;background:${FILL}">
+      <svg width="150" height="56" viewBox="0 0 150 56" fill="none">
+        <g stroke="${INK}" stroke-width="2.5" fill="#fff">
+          <circle cx="20" cy="36" r="15"/><circle cx="24" cy="15" r="9"/><circle cx="27.5" cy="14" r="2.8" fill="${INK}"/></g>
+        <path d="M44 32h52" stroke="#9a9a9a" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round"/>
+        <g transform="translate(102,16) scale(1.1)" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round">${ico.earbud.replace(/<\/?svg[^>]*>/g, "")}</g>
+      </svg>
+      <span style="flex:1"></span>
+      <svg width="30" height="30" viewBox="0 0 24 24" stroke="${INK}" stroke-width="4" stroke-linecap="round"><path d="M4 4l16 16M20 4L4 20"/></svg>
+    </div>
+    <p class="m" style="margin:6px 0 0;text-align:center">
       ${t("Pair headphones with your <b>phone</b> — audio stays in sync. Just mute ATOM.",
           "耳机连<b>手机</b>，声音自动同步；想安静时把 ATOM 静音即可。")}</p>
-    <p class="note" style="margin:10px 0 0;width:100%">${t("Headphones can't connect to ATOM directly.", "耳机无法直连 ATOM。")}</p>
   </div>`,
 
 /* 16 求助 */
