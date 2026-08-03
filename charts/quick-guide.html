@@ -654,16 +654,15 @@ const PAGES = [
       <span style="flex:1"></span>
       <svg width="30" height="30" viewBox="0 0 24 24" stroke="${INK}" stroke-width="4" stroke-linecap="round"><path d="M4 4l16 16M20 4L4 20"/></svg>
     </div>
-    <div style="border:1.5px solid var(--ink);padding:10px 12px;display:flex;align-items:center;gap:12px;position:relative">
-      <span class="badge" style="position:absolute;right:-1.5px;top:-1.5px">${t.one("AUTO", "自动")}</span>
-      <svg width="70" height="34" viewBox="0 0 70 34" fill="none" stroke="${INK}" stroke-linecap="round">
-        <g transform="translate(0,4)" stroke-width="2.2">${ico.earbud.replace(/<\/?svg[^>]*>/g, "")}</g>
-        <path d="M30 12a7 7 0 0 1 0 9M34 9a11 11 0 0 1 0 15" stroke-width="1.8"/>
-        <g stroke-width="2" fill="#fff"><circle cx="52" cy="22" r="8.5"/><circle cx="54.5" cy="10" r="5.5"/><circle cx="56.5" cy="9" r="1.8" fill="${INK}"/></g>
-        <path d="M62 24l6 6M68 24l-6 6" stroke-width="2.2"/>
+    <div style="border:1.5px solid var(--ink);padding:10px 12px;display:flex;align-items:center;gap:12px">
+      <svg width="66" height="30" viewBox="0 0 66 30" fill="none" stroke="${INK}" stroke-linecap="round">
+        <g stroke-width="2" fill="#fff"><circle cx="10" cy="18" r="7.5"/><circle cx="12.5" cy="7.5" r="4.8"/><circle cx="14.2" cy="6.8" r="1.6" fill="${INK}"/></g>
+        <path d="M19 21l5 5M24 21l-5 5" stroke-width="2"/>
+        <path d="M34 15h8m0 0l-3.5-3.5M42 15l-3.5 3.5" stroke-width="2"/>
+        <rect x="48" y="3" width="15" height="24" rx="3.5" stroke-width="2.2"/>
       </svg>
-      <div class="m" style="flex:1;padding-right:26px">${t("Audio moves to your headphones; ATOM mutes itself",
-        "声音自动进耳机，ATOM 自动静音")}</div>
+      <div class="m" style="flex:1">${t("In the app, set <b>Sound Output</b> to Phone — ATOM goes quiet",
+        "在 App「<b>声音输出</b>」选<span style=\"white-space:nowrap\">手机</span>，ATOM 即静音")}</div>
     </div>
   </div>`,
 
