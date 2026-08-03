@@ -50,3 +50,55 @@
 - **Frozen? Press Power for 10s** → **Frozen? Hold Power for 10 s**（press ≠ hold，且与 P05 的 press-and-hold 呼应）
 - **Can't Pair? Turn on Bluetooth & restart** → **… & restart ATOM**（补宾语，restart 什么要说清）
 - **Found a Bug? Report it to help us improve** → 可保留；更紧凑：**Found a bug? Report it in the app**
+
+
+---
+
+## 附 2：逐页替换清单（对照英文版 PDF，🔴 必改 / 🟡 建议）
+
+| 页 | 原文 | 改为 | 级别 |
+|---|---|---|---|
+| P02 | Getting to know ATOM | Getting to Know ATOM | 🟡 |
+| P02 | Ultra Wide Camera | Ultra-Wide Camera | 🟡 |
+| P02 | Privacy Mask（标在 Back 组） | 移回 Front 组（或与产品确认标注位） | 🔴 |
+| P03 | Only 3 Steps | 3 Easy Steps | 🟡 |
+| P03 | 1 Download App | 1 Download the App | 🔴 |
+| P03 | 2 Pair Your Account | 2 Pair Your ATOM | 🔴 |
+| P03 | 3 Connect to WiFi | 3 Connect to Wi-Fi | 🟡 |
+| P04 | 1 Download App | 1 Download the App | 🔴 |
+| P05 | 眉题 Pair Your Account | Pair Your ATOM | 🔴 |
+| P05 | Long press ⏻ for 2s | Press and hold ⏻ for 2 s | 🔴 |
+| P05 | Make sure ATOM is charged before first use. If ATOM is unresponsive, hold the power button for 10s to force restart | Charge ATOM before first use.（10 s 重启已在 P16，删避免重复） | 🟡 |
+| P06 | 眉题 Pair Your Account | Pair Your ATOM | 🔴 |
+| P06 | Create Account and pair your ATOM with the App | Create an account, then pair your ATOM in the app | 🟡 |
+| P06 | Make sure ATOM is powered on and in pairing mode | Make sure ATOM is powered on and nearby（若产品无 pairing mode 概念） | 🔴 |
+| P07 | 眉题 Pair Your Account | Pair Your ATOM | 🔴 |
+| P07 | 2.3 Complete Pairing | 2.3 Finish Pairing | 🟡 |
+| P07 | ATOM 1234 | ATOM 4E3Y（1234 像 PIN 码/占位符） | 🟡 |
+| P08 | Connect ATOM to WiFi with phone | 3.1 Connect via Your Phone | 🔴 |
+| P08 | Choose WiFi in your App | Pick a network in the app | 🔴 |
+| P08 | 脚注 Does not support 5GHz or login-required WiFi | 删除（上方列表 ✗ 已表达） | 🟡 |
+| P08 | 5GHz | 5 GHz | 🟡 |
+| P09 | Connect ATOM directly to WiFi | 3.2 Connect on ATOM | 🟡 |
+| P10 | Select AP band 2.4 GHz | Set AP band to 2.4 GHz | 🟡 |
+| P11 | 图内 0.5—1 m（em dash） | 0.5–1 m（en dash，与文内一致） | 🟡 |
+| P11 | Full body in frame with a clear view | Full body in frame, view unobstructed | 🟡 |
+| P12 | 标题 Recommended（与格内徽章重复） | Good Spots 或 Do | 🟡 |
+| P12 | Either is fine. Please follow the instructions | Either works — follow the exercise cues | 🔴 |
+| P13 | 组标题 ATOM View | What ATOM Sees | 🟡 |
+| P13 | 组标题 Positioning（与眉题重复） | How It's Placed | 🟡 |
+| P13 | Too Close to Edge | Off-Center | 🔴 |
+| P13 | Too Low Angle | Too Low（与 Too High 成对；语法上 too low angle 不成立） | 🔴 |
+| P13 | Obstructed | Blocked | 🟡 |
+| P14 | Set Audio Output to Phone in the app | 与 App 实际英文串对齐（Audio Output vs Sound Output，以 App 为准） | 🔴 |
+| P14 | ATOM and the app can play audio independently. We recommend using only one at a time | ATOM and the app can each play audio — best to keep just one on. | 🟡 |
+| P15 | Train Immersively on Your TV? | Train on the Big Screen? | 🔴 |
+| P15 | ATOM doesn't connect directly to the TV | ATOM can't connect directly to the TV（与 P14 句式统一） | 🟡 |
+| P15 | Connect your phone and TV to the same WiFi | …the same Wi-Fi | 🟡 |
+| P16 | Update, Keep ATOM & App up to date | Stay current — update ATOM & the app regularly | 🔴 |
+| P16 | Frozen? Press Power for 10s | Frozen? Hold Power for 10 s | 🔴 |
+| P16 | Can't Pair? Turn on Bluetooth & restart | Can't pair? Turn on Bluetooth & restart ATOM | 🟡 |
+| P16 | No WiFi? 2.4 GHz only | No Wi-Fi? 2.4 GHz only | 🟡 |
+| P16 | Found a Bug? Report it to help us improve | 可保留；更紧凑：Found a bug? Report it in the app | 🟡 |
+| 全册 | WiFi（与 P08 示例行 Wi-Fi 混用） | 统一 Wi-Fi | 🔴 |
+| 全册 | 2s / 10s / 5GHz | 2 s / 10 s / 5 GHz（数字与单位加空格） | 🟡 |
