@@ -1,6 +1,6 @@
 # 印刷初稿归档（2026-08-03）
 
-> `assets/guide/print-draft/` 下两份 PDF 为设计师最终**印刷初稿**（单页设计交付板：
+> `packaging/quick-guide/final/` 下两份 PDF 为设计师最终**印刷初稿**（单页设计交付板：
 > 全部页面横排 + 86 × 54 mm 裁切标注，文字已转曲）。本轮讨论至此告一段落。
 
 - `ATOM-quick-guide-print-draft-EN.pdf` — 英文版交付板
@@ -28,7 +28,7 @@ can't connect directly 统一；Hold Power Button；Report it in the app；邮�
 
 ## 状态
 
-- 本仓库排版稿（charts/quick-guide.html + assets/guide/cn|en）作为**结构与文案的参照源**保留；
+- 本仓库排版稿（packaging/quick-guide/ 下 src + exports）作为**结构与文案的参照源**保留；
   印刷以设计师交付板为准。
-- 待办延续项见 quick-guide-copy.md 第 7 节（P15 自动静音上线后的 AUTO 版切换、
+- 待办延续项见 copy-and-decisions.md 第 7 节（P15 自动静音上线后的 AUTO 版切换、
   /r/help 重定向服务上线后方可印刷、企业微信活码替换）。

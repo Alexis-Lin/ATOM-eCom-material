@@ -9,12 +9,12 @@
 
 ## 步骤
 
-**1. 改数据** —— 编辑 `charts/` 下对应 HTML 里的 `DATA` 对象（文案 / 档位 / 配额都在那里）。
+**1. 改数据** —— 编辑 `src/` 下对应 HTML 里的 `DATA` 对象（文案 / 档位 / 配额都在那里）。
 
 **2. 起本地服务器**（不要用 `file://`，见下方注意事项）：
 
 ```bash
-cd charts && python3 -m http.server 8000
+cd detail-page/comparison-charts/src && python3 -m http.server 8000
 ```
 
 **3. 用一个包裹页只保留目标图并测高**，再按实际高度截图。示例脚本（导出套装图中文版）：

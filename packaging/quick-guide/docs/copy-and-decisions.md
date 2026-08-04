@@ -136,9 +136,9 @@
 
 ## 6. 交付物
 
-- `charts/quick-guide.html`：16 页可交互版式稿（EN / 中文 / EN+中文三模式切换；54 × 85.6 mm 打印样式；`?page=N&lang=xx` 单页模式）。
-- `assets/guide/cn|en/`：中 / 英两版逐页 PNG（1500 px 宽，约 700 dpi）——**2026-08 决：中英分开两套物料，各自单语交付**；双语混排方案保留在第 5 节与代码中（`?lang=bi`）备用。
-- `assets/guide/quick-guide-print-{cn,en}.pdf`：54 × 85.6 mm 印刷 PDF。
+- `packaging/quick-guide/src/quick-guide.html`：16 页可交互版式稿（EN / 中文 / EN+中文三模式切换；54 × 85.6 mm 打印样式；`?page=N&lang=xx` 单页模式）。
+- `packaging/quick-guide/exports/cn|en/`：中 / 英两版逐页 PNG（1500 px 宽，约 700 dpi）——**2026-08 决：中英分开两套物料，各自单语交付**；双语混排方案保留在第 5 节与代码中（`?lang=bi`）备用。
+- `packaging/quick-guide/exports/quick-guide-print-{cn,en}.pdf`：54 × 85.6 mm 印刷 PDF。
 - **导出管线**：无头 Chrome `--print-to-pdf`（矢量、@page 精确控制尺寸）→ pypdfium2 逐页转 PNG。
   不要用 `--screenshot` + CSS zoom/transform/高 DSF——无头软渲染在设备像素 ~1900 行以后丢画（页脚整条消失），踩过坑。
 - 页内二维码为**真实可扫**的链接（下载页 / 客服页），非占位图。

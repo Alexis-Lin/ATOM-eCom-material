@@ -1,76 +1,32 @@
-# ATOM 电商物料 · ATOM eCommerce Material
+# ATOM 对外物料库 · ATOM Materials
 
-BodyPark **ATOM 口袋 AI 私教机**的官网 / 电商详情页对比图物料。**两套交付**（国内中文 / 海外英文），每套三张，均为 @3x 高清、手机屏宽、白底全直角。
+BodyPark **ATOM 口袋 AI 私教机**的对外物料仓库：产品宣传素材、电商/官网销售详情页素材、包装印刷物。
+每个物料项目自包含（`src` 源码 / `exports` 成品 / `docs` 决策与文案 / `README` 项目说明），可独立再生成。
 
-> 交付对象：官网设计团队 + 电商运营团队。
-> 数据与命名以《ATOM 产品定价与套装组合说明》为准；政策更新时同步本仓库。
+> 命名与口径以《ATOM 产品定价与套装组合说明》为准，全局对照表见 [`docs/decisions.md`](docs/decisions.md)。
 
----
-
-## 交付素材（assets/）
+## 目录结构
 
 ```
-assets/
-  cn/                              国内 · 中文
-    1-kit-cn.png                   套装对比
-    2-membership-simple-cn.png     会员对比 · 简洁版（详情页首屏）
-    3-membership-detail-cn.png     会员对比 · 详细版（逐项核对）
-  global/                          海外 · English
-    1-kit-global.png               Kit comparison
-    2-membership-simple-global.png Membership · simple
-    3-membership-detail-global.png Membership · detailed
-  guide/                           开箱快速指南（16 面小手册，单面 54 × 85.6 mm）
-    cn/ 01–16-cn.png               中文逐页（1500 × 2380 px）
-    en/ 01–16-en.png               英文逐页
-    quick-guide-print-{cn,en}.pdf  印刷 PDF（54 × 85.6 mm × 16 页，矢量，排版稿导出）
-    print-draft/                   设计师最终印刷初稿交付板（2026-08 归档，印刷以此为准）
+detail-page/                 销售详情页素材（电商 / 官网）
+  comparison-charts/         ├─ 套装对比图 + 会员对比图（中/英两套，详情页嵌入）
+marketing/                   对外宣传素材（预留：KV、社媒、发布会物料…）
+packaging/                   包装与随盒印刷物
+  quick-guide/               ├─ 开箱快速指南（16 面小手册，54 × 85.6 mm）
+docs/                        全局文档
+  decisions.md               ├─ 命名 / 定价 / 会员政策 / 售前口径（所有物料共用）
 ```
 
-**规格**：宽 **1272 / 1296 px**（424 / 432pt @3x），PNG，白底、**无边框、全直角**，高度随内容。可直接在手机查看或嵌入详情页。
+## 物料索引
 
-**两套的区别**：
-- **套装对比**：国内 / 海外内容不同（币种 ¥/$、赠送时长不同）。
-- **会员对比**：功能矩阵全球一致，仅语言不同。
+| 物料 | 位置 | 状态 | 成品 |
+|---|---|---|---|
+| 套装对比图（中/英） | `detail-page/comparison-charts/` | ✅ 已交付 | `exports/cn|global/1-kit-*.png` |
+| 会员对比图 · 简洁/详细（中/英） | `detail-page/comparison-charts/` | ✅ 已交付 | `exports/cn|global/2-*, 3-*.png` |
+| 开箱快速指南（中/英） | `packaging/quick-guide/` | ✅ 印刷初稿归档 | `final/`（印刷以此为准）；`exports/` 为排版稿参照 |
 
----
+## 约定
 
-## 视觉规范
-
-**字号阶梯（全表统一）**
-
-| 层级 | 字号 | 用途 |
-|---|---|---|
-| 标题 | 20 | 主标题 |
-| 副标题 / 横幅 / 档位名 | 13.5 | 副标题、购机横幅、Basic/Plus/Pro 名 |
-| 正文 | 12–13.5 | 功能条目、格值（密度大的简洁版用 12） |
-| 说明 | 9.5–10 | 分组标签、注释、脚注、用量单位 |
-
-**配色**：三档三色 —— Basic 灰 / Plus 绿 / Pro 黑金；档位名压**黑底会员卡**（银 / 绿 / 金字）。套装图为单绿渐进。
-
-**造型**：**全部直角**（黑卡、色块、高亮块、标签、横幅均无圆角），贴合运动产品调性；勾选为粗线条深色。
-
-**关键信息**：会员图顶部横幅明示「购买 ATOM 主机即送 Pro + Plus 会员」，预防"买硬件是否还要买会员"的售前疑问；「即将」功能已并入功能列表内联标注。
-
----
-
-## 源码与再生成（charts/ · docs/）
-
-```
-charts/
-  kit-compare.html          套装对比（中 + 英）
-  membership-simple.html    会员 · 简洁版（中 + 英）
-  membership-matrix.html    会员 · 详细版（中 + 英）
-  quick-guide.html          开箱快速指南 16 页排版稿（EN/中文切换 · 打印 CSS · ?page=N&lang=xx 单页导出）
-docs/
-  decisions.md              命名 / 定价 / 会员政策 / 售前口径 / 待决
-  regenerate.md             无头 Chrome 出图流程与校验基准
-  quick-guide-copy.md       快速指南：一致性核查 + 字号系统 + 双语精简文案表
-```
-
-图表为纯 HTML/CSS（无依赖）。改数据编辑 `charts/*.html` 顶部 `DATA`，再按 `docs/regenerate.md` 用无头 Chrome 以 `--force-device-scale-factor=3` 导出 @3x。
-
----
-
-## 待决
-
-见 [`docs/decisions.md`](docs/decisions.md) 第 8 节。主要：「预览 / Preview」的具体定义；内部功能表与本物料口径对齐；防撞彩壳到货（约 9 月）加回套装图。
+- **目录三层制**：`用途分类 / 物料项目 / src·exports·docs`。新物料照此建目录，并在上表登记。
+- **成品可再生成**：所有图表/版式为纯 HTML/CSS 源码，导出流程见各项目 `docs/regenerate.md` 或 README。
+- **语言版命名**：中文 `cn`、海外英文 `global`（详情页沿用历史命名）或 `en`（印刷物）。
