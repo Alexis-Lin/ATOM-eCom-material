@@ -1,0 +1,418 @@
+<title>ATOM 详情页优化示意 · Before / After</title>
+<style>
+  :root{
+    --canvas:#ece9e4; --canvas-ink:#2a2825; --canvas-mut:#8a857d;
+    --chip:#ffffff; --chip-bd:#d8d3cb; --lime:#8FE000; --lime-dk:#5E8A00;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --canvas:#191a1c; --canvas-ink:#e8e6e1; --canvas-mut:#8b8d90; --chip:#232527; --chip-bd:#3a3d40; }
+  }
+  :root[data-theme="dark"]{ --canvas:#191a1c; --canvas-ink:#e8e6e1; --canvas-mut:#8b8d90; --chip:#232527; --chip-bd:#3a3d40; }
+  :root[data-theme="light"]{ --canvas:#ece9e4; --canvas-ink:#2a2825; --canvas-mut:#8a857d; --chip:#ffffff; --chip-bd:#d8d3cb; }
+
+  body{ background:var(--canvas); color:var(--canvas-ink); margin:0; padding:0 0 70px;
+    font-family:"Helvetica Neue",Helvetica,Arial,"PingFang SC","Noto Sans SC",sans-serif; }
+  .chrome{ position:sticky; top:0; z-index:50; background:var(--canvas); border-bottom:1px solid var(--chip-bd);
+    padding:13px 22px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .chrome h1{ font-size:15px; margin:0; font-weight:700; }
+  .spec{ font-size:11px; color:var(--canvas-mut); }
+  .spacer{ flex:1; }
+  .seg{ display:flex; border:1px solid var(--chip-bd); background:var(--chip); }
+  .seg button{ font:inherit; font-size:12.5px; padding:6px 16px; border:0; background:transparent;
+    color:var(--canvas-mut); cursor:pointer; }
+  .seg button[aria-pressed="true"]{ background:var(--canvas-ink); color:var(--canvas); font-weight:700; }
+  .seg button:focus-visible{ outline:2px solid var(--lime-dk); outline-offset:-2px; }
+  .hint{ font-size:12px; color:var(--canvas-mut); max-width:78ch; line-height:1.6; margin:18px auto 6px; padding:0 22px; }
+
+  /* ===== 页面模拟（恒亮色，还原真实网页）===== */
+  .stage{ max-width:1080px; margin:16px auto 0; padding:0 22px; }
+  .mock{ background:#fff; color:#111; border:1px solid var(--chip-bd); border-radius:10px;
+    box-shadow:0 16px 40px rgba(0,0,0,.16); overflow:hidden; position:relative; }
+  .mock .nav{ display:flex; align-items:center; gap:22px; padding:14px 26px; border-bottom:1px solid #eee; font-size:13px; color:#333; }
+  .mock .nav .logo{ font-weight:800; letter-spacing:.06em; display:flex; align-items:center; gap:7px; }
+  .mock .nav .logo i{ width:18px; height:18px; background:var(--lime); border-radius:4px; display:inline-block;
+    clip-path:polygon(15% 0,100% 30%,60% 55%,100% 80%,15% 100%,35% 52%); }
+  .mock .nav span{ color:#555; }
+  .grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:30px; padding:26px; }
+  @media (max-width:820px){ .grid{ grid-template-columns:1fr; } }
+
+  /* 左：图集 */
+  .gallery{ position:relative; }
+  .hero{ background:linear-gradient(180deg,#f4f5f6,#e7e9ea); border-radius:10px; position:relative;
+    min-height:390px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .hero .brandline{ position:absolute; left:16px; top:14px; display:flex; align-items:center; gap:8px;
+    font-weight:800; font-size:13px; letter-spacing:.05em; }
+  .hero .brandline i{ width:15px; height:15px; background:var(--lime); border-radius:3px; display:inline-block;
+    clip-path:polygon(15% 0,100% 30%,60% 55%,100% 80%,15% 100%,35% 52%); }
+  .hero .kitname{ position:absolute; left:16px; top:38px; font-size:15px; font-weight:700; color:#222; }
+  .hero .diffchip{ position:absolute; left:16px; top:64px; font-size:11.5px; font-weight:800;
+    background:#111; color:var(--lime); padding:4px 9px; border-radius:5px; letter-spacing:.03em; }
+  .hero .reddot{ position:absolute; right:14px; top:12px; text-align:center; font-size:8px; color:#fff; }
+  .hero .reddot b{ display:block; width:44px; height:44px; border-radius:50%; background:#c00; color:#fff;
+    font-size:9px; line-height:1.1; display:flex; align-items:center; justify-content:center; font-weight:800; }
+  .hero .reddot span{ color:#666; display:block; margin-top:2px; font-size:8.5px; }
+  .contents-row{ position:absolute; left:0; right:0; bottom:10px; display:flex; justify-content:center; gap:14px;
+    font-size:10.5px; color:#555; }
+  .contents-row .it{ display:flex; flex-direction:column; align-items:center; gap:2px; }
+  .thumbs{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .thumb{ width:76px; height:76px; border:1.5px solid #ddd; border-radius:8px; background:#f6f7f7;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    font-size:9px; color:#666; text-align:center; padding:4px; box-sizing:border-box; }
+  .thumb b{ font-size:10px; color:#333; }
+  .thumb.active{ border-color:#111; }
+
+  /* 右：购买栏 */
+  .buy{ position:relative; }
+  .buy h2{ font-size:26px; margin:0 0 2px; }
+  .buy .tagline{ font-size:14px; color:#444; margin:0 0 8px; }
+  .rating{ font-size:12.5px; color:#333; margin:0 0 14px; }
+  .rating .stars{ color:#f5a623; letter-spacing:1px; }
+  .kf{ margin:0 0 14px; padding:0 0 0 18px; font-size:13.5px; line-height:1.8; color:#222; }
+  .banner{ display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--lime); color:#111; font-size:13px; font-weight:700; padding:10px 14px;
+    border-radius:8px; margin:0 0 8px; clip-path:polygon(0 0,97% 0,100% 50%,97% 100%,0 100%); }
+  .banner .cnt{ background:#111; color:var(--lime); font-size:11px; padding:3px 8px; border-radius:5px; white-space:nowrap; }
+  .banner.secondary{ background:#eef7dd; font-weight:600; }
+  .pricebox{ display:flex; align-items:baseline; gap:10px; margin:14px 0 4px; }
+  .pricebox .now{ font-size:26px; font-weight:800; }
+  .pricebox .was{ font-size:14px; color:#999; text-decoration:line-through; }
+  .pricebox .save{ font-size:11.5px; font-weight:700; color:var(--lime-dk); background:#eef7dd; padding:2px 7px; border-radius:5px; }
+  .choose{ font-size:14px; font-weight:700; margin:12px 0 8px; display:flex; justify-content:space-between; align-items:baseline; }
+  .choose a{ font-size:12px; color:var(--lime-dk); font-weight:600; }
+  .kit{ border:1.5px solid #ddd; border-radius:10px; padding:11px 14px; margin-bottom:8px; cursor:pointer; position:relative; }
+  .kit.sel{ border-color:var(--lime-dk); box-shadow:0 0 0 1.5px var(--lime-dk) inset; }
+  .kit .t{ font-size:14px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .kit .pop{ font-size:10px; font-weight:800; background:#111; color:var(--lime); padding:2px 7px; border-radius:4px; letter-spacing:.04em; }
+  .kit .d{ font-size:11.5px; color:#666; margin-top:3px; display:flex; justify-content:space-between; gap:8px; }
+  .kit .d b{ color:var(--lime-dk); white-space:nowrap; }
+  .cta{ width:100%; font:inherit; font-size:15px; font-weight:800; background:#111; color:#fff;
+    border:0; border-radius:9px; padding:13px 0; margin-top:8px; cursor:pointer; }
+  .assure{ display:flex; gap:14px; font-size:11px; color:#666; margin-top:10px; flex-wrap:wrap; }
+  .boxrow{ background:#f5f5f5; border-radius:8px; padding:11px 14px; font-size:13px; color:#333; margin-top:12px; }
+
+  /* ===== 标注 ===== */
+  .pin{ position:absolute; z-index:5; width:23px; height:23px; border-radius:50%; border:0; cursor:pointer;
+    font:inherit; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 9px rgba(0,0,0,.3); }
+  .after .pin{ background:#111; color:var(--lime); }
+  .before .pin{ background:#c62828; color:#fff; }
+  .pin:focus-visible{ outline:2px solid var(--lime-dk); outline-offset:2px; }
+  body.no-pins .pin, body.no-pins .pop{ display:none; }
+  .pop{ position:absolute; z-index:9; width:230px; background:#111; color:#eee; border-radius:9px;
+    padding:11px 13px; font-size:12px; line-height:1.55; display:none; box-shadow:0 10px 30px rgba(0,0,0,.4); }
+  .pop.open{ display:block; }
+  .pop b{ color:#fff; display:block; margin-bottom:3px; font-size:12.5px; }
+  .pop .pr{ display:inline-block; font-size:10px; font-weight:800; padding:1px 6px; border-radius:4px;
+    background:var(--lime); color:#111; margin-bottom:5px; }
+  .pop .pr.p1{ background:#ffd54f; } .pop .pr.p2{ background:#b0bec5; }
+
+  /* 图例 */
+  .legend{ max-width:1080px; margin:22px auto 0; padding:0 22px; }
+  .legend h3{ font-size:14px; margin:0 0 10px; }
+  .legend ol{ margin:0; padding:0; list-style:none; display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:8px; }
+  .legend li{ background:var(--chip); border:1px solid var(--chip-bd); border-radius:8px; padding:9px 12px;
+    font-size:12.5px; line-height:1.5; display:flex; gap:9px; }
+  .legend .n{ flex:none; width:20px; height:20px; border-radius:50%; background:var(--canvas-ink); color:var(--canvas);
+    font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .legend li.warn .n{ background:#c62828; color:#fff; }
+  .legend .pr{ font-size:10px; font-weight:800; padding:1px 6px; border-radius:4px; background:var(--lime); color:#111; margin-left:6px; }
+  .legend .pr.p1{ background:#ffd54f; } .legend .pr.p2{ background:#b0bec5; }
+  .disclaimer{ max-width:1080px; margin:16px auto 0; padding:0 22px; font-size:11px; color:var(--canvas-mut); line-height:1.6; }
+  @media (prefers-reduced-motion:no-preference){ .kit,.pin{ transition:box-shadow .12s ease,border-color .12s ease; } }
+</style>
+
+<div class="chrome">
+  <h1>ATOM 详情页优化示意</h1>
+  <span class="spec">对照 docs/optimization-2026-08.md · 页面为示意 mockup，价格为占位</span>
+  <span class="spacer"></span>
+  <div class="seg" role="group" aria-label="View">
+    <button id="v-before" aria-pressed="false" onclick="setView('before')">现状 Before</button>
+    <button id="v-after" aria-pressed="true" onclick="setView('after')">优化后 After</button>
+  </div>
+  <div class="seg" role="group" aria-label="Pins">
+    <button id="p-on" aria-pressed="true" onclick="setPins(true)">标注开</button>
+    <button id="p-off" aria-pressed="false" onclick="setPins(false)">标注关</button>
+  </div>
+</div>
+
+<p class="hint">「优化后」视图里的<b>套装选择器可以点击</b>——主图套装名、差异 chip、内含图标、价格、盒内清单会实时联动（这正是要页面实现的核心交互）。
+点编号圆点看每处改动的说明与优先级；红点 = 现状问题，黑点 = 优化做法。</p>
+
+<div class="stage">
+
+  <!-- ================= BEFORE ================= -->
+  <section class="mock before" id="mock-before" style="display:none">
+    <div class="nav"><span class="logo"><i></i>BODYPARK</span><span>Home</span><span>Atom</span><span>Tech</span><span>Accessories</span><span>Brand</span><span>Store</span></div>
+    <div class="grid">
+      <div class="gallery">
+        <div class="hero" id="hero-b"></div>
+        <div class="thumbs">
+          <div class="thumb active"><b>主图</b>渲染图</div>
+          <div class="thumb">TOP1 文字图</div>
+          <div class="thumb">三脚架</div>
+          <div class="thumb">渲染图 2</div>
+          <div class="thumb">配件</div>
+          <div class="thumb">App 图</div>
+        </div>
+        <button class="pin" style="left:10px;top:10px" data-pop="pb1">1</button>
+        <div class="pop" id="pb1"><b>主图无信息</b>只有渲染图：不回答"这是什么"，切换套装主图也不变，看不到"到手是什么"。</div>
+        <button class="pin" style="left:10px;bottom:64px" data-pop="pb6">6</button>
+        <div class="pop" id="pb6" style="bottom:90px;left:10px"><b>图集无叙事线</b>缩略图顺序随机，文字图缩略态不可读。</div>
+      </div>
+      <div class="buy">
+        <h2>BodyPark ATOM</h2>
+        <p style="font-size:13.5px;font-weight:700;margin:10px 0 6px">Key Features</p>
+        <ul class="kf">
+          <li>Every rep counts. Stay in the zone.</li>
+          <li>AI coach with real-time feedback</li>
+          <li>Agentic AI trainer, smart adaptive planning</li>
+          <li>Portable MagMount design. Train anywhere, share with ease.</li>
+        </ul>
+        <div class="banner">First 1,000 Orders — Get a FREE Resistance Band <span>🟩</span></div>
+        <div class="banner">Every package includes a FREE lifetime PLUS membership <span class="cnt">PLUS</span></div>
+        <p class="choose">Choose your package.</p>
+        <div class="kit sel"><div class="t">ATOM Stand Alone</div></div>
+        <div class="kit"><div class="t">ATOM Training Kit</div></div>
+        <div class="kit"><div class="t">ATOM Performance Kit</div></div>
+        <div class="boxrow">📦 What's in the box</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AFTER ================= -->
+  <section class="mock after" id="mock-after">
+    <div class="nav"><span class="logo"><i></i>BODYPARK</span><span>Home</span><span>Atom</span><span>Tech</span><span>Accessories</span><span>Brand</span><span>Store</span></div>
+    <div class="grid">
+      <div class="gallery">
+        <div class="hero">
+          <div class="brandline"><i></i>BODYPARK <span style="font-weight:600;color:#555">ATOM</span></div>
+          <div class="kitname" id="a-kitname">Performance Kit</div>
+          <div class="diffchip" id="a-diff">+12 mo PRO</div>
+          <div class="reddot"><b>reddot<br>winner<br>2025</b></div>
+          <div id="hero-a"></div>
+          <div class="contents-row" id="a-contents"></div>
+        </div>
+        <div class="thumbs">
+          <div class="thumb active"><b>① 我是谁</b>主图·联动套装</div>
+          <div class="thumb"><b>② 能干什么</b>计数/纠错实拍</div>
+          <div class="thumb"><b>③ 怎么用</b>摆放+投屏</div>
+          <div class="thumb"><b>④ 套装内含</b>拆箱平铺</div>
+          <div class="thumb"><b>⑤ App</b>三屏</div>
+          <div class="thumb"><b>⑥ 技术参数</b>尺寸图</div>
+        </div>
+        <button class="pin" style="left:10px;top:96px" data-pop="pa1">1</button>
+        <div class="pop" id="pa1" style="left:10px;top:124px"><span class="pr p1">P1</span><b>主图随套装联动</b>套装名 + 组合物料图跟随右侧选择切换（点右边试试）；品牌行固定。</div>
+        <button class="pin" style="left:120px;top:60px" data-pop="pa2">2</button>
+        <div class="pop" id="pa2" style="left:120px;top:88px"><span class="pr p1">P1</span><b>差异 chip 替代会员 chip</b>「Lifetime Plus 人人都送」不是差异信息——黄金位改放随套装变化的 <b>+N mo PRO</b>（口径同套装对比图）。</div>
+        <button class="pin" style="right:64px;top:12px" data-pop="pa3">3</button>
+        <div class="pop" id="pa3" style="right:10px;top:64px"><span class="pr p2">P2</span><b>reddot 规范使用</b>官方素材 + 年份/类别（reddot winner 2025），不裸放 logo。</div>
+        <button class="pin" style="left:10px;bottom:96px" data-pop="pa11">11</button>
+        <div class="pop" id="pa11" style="left:10px;bottom:124px"><span class="pr p2">P2</span><b>图集叙事线</b>①我是谁→②能干什么→③怎么用→④套装内含→⑤App→⑥参数；拆箱平铺图入图集（折叠面板点开率低）。</div>
+      </div>
+      <div class="buy">
+        <h2>BodyPark ATOM</h2>
+        <p class="tagline">Your AI coach that sees, counts, and corrects.</p>
+        <p class="rating"><span class="stars">★★★★★</span> 4.9 · 326 reviews</p>
+        <ul class="kf">
+          <li><b>Counts every rep, corrects your form — live</b></li>
+          <li>Builds your weekly plan, adapts as you improve</li>
+          <li>Pocket-sized — MagMount snaps on anywhere</li>
+          <li>Cast workouts to your TV</li>
+        </ul>
+        <div class="banner">First 1,000 Orders — FREE Resistance Band <span class="cnt">仅剩 214</span></div>
+        <div class="pricebox"><span class="now" id="a-price">$329</span><span class="was" id="a-was">$358</span><span class="save" id="a-save">Save $29</span></div>
+        <div style="font-size:11.5px;color:#666;margin-bottom:4px">Every package includes a free lifetime <b>Plus</b> membership.</div>
+        <p class="choose">Choose your package. <a href="#" onclick="return false">Compare kits →</a></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="legend" id="legend"></div>
+<p class="disclaimer">※ 本页为优化<b>示意 mockup</b>：产品图为线稿占位（实施时用渲染图/实拍）、价格与评论数为<b>占位数字</b>、reddot 徽章为示意（需用官方素材）。
+改动依据与完整清单见仓库 <code>detail-page/product-page/docs/optimization-2026-08.md</code>；套装内含与会员赠送口径见 <code>docs/decisions.md</code>。</p>
+
+<script>
+/* ====== ATOM 设备示意（暗色渲染风线稿）====== */
+function atomRender(w){
+  return `<svg width="${w}" viewBox="0 0 240 300" fill="none">
+    <ellipse cx="120" cy="282" rx="78" ry="10" fill="rgba(0,0,0,.10)"/>
+    <circle cx="128" cy="66" r="42" fill="#2b2d2f"/>
+    <ellipse cx="86" cy="70" rx="9" ry="15" fill="#232425"/>
+    <ellipse cx="170" cy="70" rx="9" ry="15" fill="#232425"/>
+    <circle cx="122" cy="64" r="21" fill="#101112"/><circle cx="122" cy="64" r="11" fill="#2e3f52"/>
+    <circle cx="117" cy="59" r="3.5" fill="#9fc4e8" opacity=".8"/>
+    <circle cx="120" cy="196" r="86" fill="#2b2d2f"/>
+    <ellipse cx="150" cy="128" rx="10" ry="7" fill="#232425"/>
+    <circle cx="184" cy="196" r="16" fill="#232425"/>
+    <circle cx="112" cy="198" r="56" fill="#0d0e0f"/>
+    <path d="M112 150a48 48 0 1 1-46 62" stroke="#8FE000" stroke-width="8" stroke-linecap="round"/>
+    <text x="106" y="196" text-anchor="middle" fill="#fff" font-size="34" font-weight="800" font-family="inherit">x9</text>
+    <text x="112" y="220" text-anchor="middle" fill="#8a8f94" font-size="15" font-family="inherit">/12</text>
+  </svg>`;
+}
+document.getElementById('hero-b').innerHTML = atomRender(230);
+document.getElementById('hero-a').innerHTML = atomRender(220);
+
+/* ====== 套装数据（价格为占位示意）====== */
+const KITS = {
+  standalone: { name:"Stand Alone", full:"ATOM Stand Alone", pro:"+1 mo PRO",
+    price:"$199", was:"", save:"", contents:["ATOM"], desc:"ATOM only", box:"ATOM · USB-C cable · Quick Guide" },
+  training: { name:"Training Kit", full:"ATOM Training Kit", pro:"+3 mo PRO",
+    price:"$269", was:"$288", save:"Save $19", contents:["ATOM","Tripod","Bag"],
+    desc:"ATOM + Gym Tripod + Pocket Bag", box:"ATOM · Gym Tripod · Pocket Bag · USB-C cable · Quick Guide" },
+  performance: { name:"Performance Kit", full:"ATOM Performance Kit", pro:"+12 mo PRO", popular:true,
+    price:"$329", was:"$358", save:"Save $29", contents:["ATOM","Tripod","Dock","Bag","Band"],
+    desc:"ATOM + Tripod + Dock + Bag + Band", box:"ATOM · Gym Tripod · Tripod Dock · Pocket Bag · Resistance Band · USB-C cable · Quick Guide" },
+};
+const ICONS = {
+  ATOM:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2"><circle cx="12" cy="16" r="6"/><circle cx="13.5" cy="6.5" r="3.6"/></svg>',
+  Tripod:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"><path d="M12 4v6M12 10l-6 10M12 10l6 10M12 10v10"/><circle cx="12" cy="3" r="1.6"/></svg>',
+  Dock:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"><path d="M5 18h14M8 18v-4a4 4 0 0 1 8 0v4"/></svg>',
+  Bag:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2.5"/><path d="M9 8V6.5A3 3 0 0 1 15 6.5V8"/></svg>',
+  Band:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"><path d="M4 15c5-7 11 7 16-1"/></svg>',
+};
+
+/* 选择器卡片（JS 生成，含 Most Popular 徽章 + 内含行 + 价格 + 差异）*/
+const ORDER = ["performance","training","standalone"];
+let CUR = "performance";
+function renderKits(){
+  const host = document.querySelector("#mock-after .buy");
+  document.querySelectorAll("#mock-after .kit").forEach(k=>k.remove());
+  const anchor = host.querySelector(".choose");
+  let html = "";
+  for (const id of ORDER){
+    const k = KITS[id];
+    html += `<div class="kit ${id===CUR?"sel":""}" role="button" tabindex="0" onclick="pick('${id}')" onkeydown="if(event.key==='Enter')pick('${id}')">
+      <div class="t">${k.full} ${k.popular?'<span class="pop2" style="font-size:10px;font-weight:800;background:#111;color:var(--lime);padding:2px 7px;border-radius:4px;letter-spacing:.04em">MOST POPULAR</span>':""}</div>
+      <div class="d"><span>${k.desc}</span><span><b>${k.pro}</b> · ${k.price}</span></div>
+    </div>`;
+  }
+  anchor.insertAdjacentHTML("afterend", html);
+  if (!host.querySelector(".cta")){
+    host.insertAdjacentHTML("beforeend", `
+      <button class="cta">Add to Cart — <span id="a-cta-price">${KITS[CUR].price}</span></button>
+      <div class="assure"><span>✓ 30-day returns</span><span>✓ 1-year warranty</span><span>✓ Free shipping</span></div>
+      <div class="boxrow">📦 What's in the box — <span id="a-box" style="color:#555">${KITS[CUR].box}</span></div>`);
+  }
+  injectBuyPins(); bindPins();
+}
+function pick(id){
+  CUR = id;
+  const k = KITS[id];
+  document.getElementById("a-kitname").textContent = k.name;
+  document.getElementById("a-diff").textContent = k.pro;
+  document.getElementById("a-price").textContent = k.price;
+  document.getElementById("a-was").textContent = k.was;
+  document.getElementById("a-save").textContent = k.save;
+  document.getElementById("a-save").style.display = k.save ? "" : "none";
+  document.getElementById("a-contents").innerHTML =
+    k.contents.map(c=>`<span class="it">${ICONS[c]}${c}</span>`).join("");
+  const cp = document.getElementById("a-cta-price"); if (cp) cp.textContent = k.price;
+  const bx = document.getElementById("a-box"); if (bx) bx.textContent = k.box;
+  document.querySelectorAll("#mock-after .kit").forEach(el=>el.classList.toggle("sel", el.getAttribute("onclick")===`pick('${id}')`));
+}
+
+/* ====== 右栏图钉层（绝对定位）====== */
+const BUY_PINS = {
+  before: [
+    {n:2, top:14,  side:"right", pr:null, t:"缺一句话定位", d:"H1 直接跳卖点列表，没有「是什么」；也没有评分与保障信息。"},
+    {n:3, top:120, side:"left",  pr:null, t:"卖点口号化 + 行话", d:"「Stay in the zone」无信息量；「Agentic」消费者不懂；前三条语义重复；「share with ease」含义不明。"},
+    {n:4, top:235, side:"left",  pr:null, t:"双 banner 同权重", d:"两条绿条叠放视觉打架 → banner blindness；「人人都送」的会员政策不该占促销位。"},
+    {n:5, top:352, side:"left",  pr:null, t:"选择器信息为零", d:"最低配置顶、只有名字：无价格、无内含、无差异；整个首屏没有价格。"},
+  ],
+  after: [
+    {n:4,  top:46,  side:"right", pr:"p0", t:"定位副标题 + 评分", d:"H1 下先回答「是什么」；星级与评论数是转化基本盘。"},
+    {n:5,  top:150, side:"left",  pr:"p0", t:"卖点重写", d:"动词开头、每条一个利益点、≤8 词；删「Agentic」「Stay in the zone」；补投屏卖点。"},
+    {n:6,  top:232, side:"left",  pr:"p1", t:"banner 只留稀缺条", d:"加剩余数量强化紧迫感；「Lifetime Plus 人人都送」降级为价格下方政策行。"},
+    {n:7,  top:286, side:"left",  pr:"p0", t:"价格上首屏且联动", d:"现价 + 划线价 + 立省额随套装切换（现状首屏没有价格）。"},
+    {n:9,  top:352, side:"right", pr:"p2", t:"Compare kits 入口", d:"直接复用仓库现成的套装对比图（comparison-charts）。"},
+    {n:8,  top:420, side:"left",  pr:"p0", t:"套装卡信息完整", d:"高价锚定置顶 + MOST POPULAR 徽章 + 内含物 + 价格 + PRO 差异——不点开就能比较。"},
+    {n:10, top:602, side:"left",  pr:"p0", t:"CTA 带价 + 保障行", d:"退货/质保/运费在加购按钮旁一行小字，扫清最后顾虑。"},
+  ],
+};
+function injectBuyPins(){
+  for (const view of ["before","after"]){
+    const host = document.querySelector(`#mock-${view} .buy`);
+    if (!host || host.querySelector(".pinlayer")) { if(host) host.querySelectorAll(".pinlayer").forEach(x=>x.remove()); }
+    host.querySelectorAll(".pinlayer").forEach(x=>x.remove());
+    const wrap = document.createElement("div"); wrap.className = "pinlayer";
+    wrap.innerHTML = BUY_PINS[view].map(p=>{
+      const pos = p.side === "right" ? "right:-11px" : "left:-11px";
+      const ppos = p.side === "right" ? "right:0" : "left:0";
+      const pr = p.pr ? `<span class="pr ${p.pr}">${p.pr.toUpperCase()}</span>` : "";
+      return `<button class="pin" style="position:absolute;top:${p.top}px;${pos}" data-pop="${view}-pop-${p.n}">${p.n}</button>
+        <div class="pop" id="${view}-pop-${p.n}" style="top:${p.top+27}px;${ppos}">${pr}<b>${p.t}</b>${p.d}</div>`;
+    }).join("");
+    host.appendChild(wrap);
+  }
+}
+
+/* ====== 标注交互 ====== */
+function bindPins(){
+  document.querySelectorAll(".pin").forEach(p=>{
+    p.onclick = (e)=>{ e.stopPropagation();
+      const tgt = document.getElementById(p.dataset.pop);
+      const was = tgt.classList.contains("open");
+      document.querySelectorAll(".pop").forEach(x=>x.classList.remove("open"));
+      if(!was) tgt.classList.add("open");
+    };
+  });
+}
+document.addEventListener("click", ()=>document.querySelectorAll(".pop").forEach(x=>x.classList.remove("open")));
+
+/* ====== 视图切换 ====== */
+function setView(v){
+  document.getElementById("mock-before").style.display = v==="before" ? "" : "none";
+  document.getElementById("mock-after").style.display = v==="after" ? "" : "none";
+  document.getElementById("v-before").setAttribute("aria-pressed", v==="before");
+  document.getElementById("v-after").setAttribute("aria-pressed", v==="after");
+  renderLegend(v);
+}
+function setPins(on){
+  document.body.classList.toggle("no-pins", !on);
+  document.getElementById("p-on").setAttribute("aria-pressed", on);
+  document.getElementById("p-off").setAttribute("aria-pressed", !on);
+}
+
+/* ====== 图例 ====== */
+const LEGEND = {
+  before: { title:"现状问题（红点）", warn:true, items:[
+    "主图无信息、不随套装联动——看不到「到手是什么」",
+    "缺一句话定位；无评分、无保障信息",
+    "卖点口号化 + 行话（Agentic）+ 语义重复",
+    "双绿 banner 同权重叠放；会员政策占促销位",
+    "选择器只有名字：无价格、无内含、无差异；首屏无价格",
+    "图集无叙事线，文字图缩略态不可读",
+  ]},
+  after: { title:"优化做法（黑点，含优先级）", items:[
+    ["主图随套装联动：套装名 + 组合物料图","p1"],
+    ["差异 chip（+N mo PRO）替代人人都送的会员 chip","p1"],
+    ["reddot 官方徽章规范使用（年份/类别）","p2"],
+    ["定位副标题 + 星级评论","p0"],
+    ["卖点重写：动词开头、去行话、补投屏","p0"],
+    ["banner 只留稀缺条 + 剩余数量；会员降为政策行","p1"],
+    ["价格上首屏且随套装联动（现价/划线价/立省）","p0"],
+    ["套装卡：置顶锚定 + 徽章 + 内含 + 价格 + PRO 差异","p0"],
+    ["Compare kits 入口（复用现成对比图物料）","p2"],
+    ["CTA 带价 + 保障行（退货/质保/运费）","p0"],
+    ["图集叙事线六步 + 拆箱平铺图","p2"],
+  ]},
+};
+function renderLegend(v){
+  const L = LEGEND[v];
+  const prName = {p0:"P0", p1:"P1", p2:"P2"};
+  document.getElementById("legend").innerHTML = `<h3>${L.title}</h3><ol>` +
+    L.items.map((it,i)=>{
+      const [txt, pr] = Array.isArray(it) ? it : [it, null];
+      return `<li${L.warn?' class="warn"':''}><span class="n">${i+1}</span><span>${txt}${pr?`<span class="pr ${pr}">${prName[pr]}</span>`:""}</span></li>`;
+    }).join("") + "</ol>";
+}
+
+/* init（支持 ?view=before|after & ?pins=0 便于截图/分享）*/
+const q = new URLSearchParams(location.search);
+renderKits(); pick("performance");
+setView(q.get("view") === "before" ? "before" : "after");
+if (q.get("pins") === "0") setPins(false);
+bindPins();
+</script>
