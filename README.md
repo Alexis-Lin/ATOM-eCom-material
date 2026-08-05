@@ -24,6 +24,7 @@ docs/                        全局文档
 | 套装对比图（中/英） | `detail-page/comparison-charts/` | ✅ 已交付 | `exports/cn|global/1-kit-*.png` |
 | 会员对比图 · 简洁/详细（中/英） | `detail-page/comparison-charts/` | ✅ 已交付 | `exports/cn|global/2-*, 3-*.png` |
 | 开箱快速指南（中/英） | `packaging/quick-guide/` | ✅ 印刷初稿归档 | `final/`（印刷以此为准）；`exports/` 为排版稿参照 |
+| 产品详情页优化提案 | `detail-page/product-page/` | 📝 提案中 | `docs/optimization-2026-08.md` |
 
 ## 约定
 
